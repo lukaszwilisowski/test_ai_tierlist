@@ -1,0 +1,82 @@
+elp me create an architecture and implementation of my quasi scientific experiment for js meetup in kraków
+general idea is this: I want to create 2 architecture (I am thinking next.js) to run two tests and comparisons. 1st would compare differnet ai agents (cursor, copilot, claude) etc with the same model: claude sonnet 4.5. This is a simplified test cause real would involve many differnet tasks, but this single task should show how different coding agents are implemented. Do the all have the same features, performance, etc. can they query internet, find sth in code reliably, fix tests etc. 
+The second architecture will be similar only this time, we will use a single tool like roo code, and test differenet llm with that, codex, sonent, sonnet opus, deep seek, gemini etc. 
+the architecture would be modular shop in next.js, where main dashboard shows different things to sell (fruites or vegetables), when you click on it you go to fruit page, you can create new frout (api beckend part in next.js using api routes), you can delete, etc. clear instructions what to do 
+The testing of solution would be done manually by me during presentation, because I do not see the way to do it automatically (we would have to create console app in node.js, create tests beforehand, ask to omit the tests but comply with requirements, and test how much coverage each solution provides) this also is not a bad idea, so which do you recommend? 
+Now, I do not want to have any biases, quasi scientific means double blind as much as possible so my idea was that:
+each project (next.js or node.js) would contain fruits.txt file that will contain a list of fruits. When I test each agent, we will provide the same instruction. part of the instruction would be to go to this file, choose one unselected fruit randomly and mark it as selected then create a file called answer.txt which contains info which fruit it was). So next.js would contain folder like modules, each module would be named after fruit but only inside would be the anwer which agent implemented that. So I could test that solution, check code, mark it and then check in reality what was it. 
+Now, for testing coding agents I need a task that will test differnent tool calling, code substitution, find and replace, find in many files, find online, and all other agentic tools that they usuallly implement
+For testing llms we should focus on functional scope, how much functionalities it can properly implement, no specific tasks that check tool calling, cause in this case we assume it already works. 
+Now, I need an idea of possible task with requirments, from which we will create SPEC.md for each module. What do you recommend? 
+Help me create a plan and challenge assumptions of my proposal. 
+For funny effect, I want to compare realit in expectations using Youtube tierlist app. THis should be special page that reads answer.txt from each folder and knows which fruts or vegetable is which agent / model. 
+Now I want to show to audiente for each project 2 screens. 
+On the left tierlist with dragand drop, items to drag on S, A, B, C tiers are coding agents such as cursor. I want to first show my expectations. 
+Then on next screent next to it, I will drag fruits based on how app works, so how I actually value solutions. In the final moment when I double click on fruit, it should reveal (be replaced) with actual agent/ model so audientce can compare my expectaions vs reality. Seems like a funny talk. 
+I would do the same with llms. 
+What do you think? Challenge, Ask follow up questions.
+
+
+1. I will only test agents that support claude sonnet 4.5 or say they do, copilot does, do not worry I will     
+  chooose agents\                                                                                                 
+  2. I want to just run it, accept all code, and not look at what folder was created, I want to run all           
+  agents simultaneously so it does not interfere. The architecture should be modular, that is the new modules     
+  should be discover, there should be not a single file that wuold be edited by all modules at the same           
+  time. This way I won't knwo which agent is which fruit\                                                         
+  3. let's try hybrid\                                                                                            
+  4. separate micro-tasks within one big task (SPEC.md for each module). Now code understanding is LLM domain     
+  not agentic domain, for example claude code uses tools like that Claude Code uses these 15 internal tools:      
+  Task (launches sub-agents), Bash (runs shell commands), Glob (finds files by pattern), Grep (searches file      
+  contents), Read (reads files), Edit (edits files via string replacement), Write (creates/overwrites             
+  files), NotebookEdit (edits Jupyter notebooks), WebFetch (fetches web pages), WebSearch (searches the web),     
+  TodoWrite (manages task lists), ExitPlanMode (exits planning), BashOutput (retrieves background shell           
+  output), KillShell (terminates background shells), and SlashCommand (executes custom commands).\                
+  5. just crud with edge cases to test more complex stuff, add fruit, delete, update, list all fruits, etc.       
+  btw use mongodb for persistenace, or sth else you recommend?                                                    
+  6. check @MODULE_SPEC.md from other modular project presentation, use sth similar,. but automatic               
+  discovery\                                                                                                      
+  7. check @"MODULE_SPEC copy.md" for similar modular project, as a reference. \                                  
+  8. time budget: automatic testing should be in results.txt or results.csv that we can process, manuall          
+  testing will require for me to click on fruit in shop dashboard, see if it loads new page, click on buttons     
+  to add, etc to see if it works or a bug happens, see how it looks just for fun\                                 
+  9. do not implement those architectures just create MD files for each step of the plan in /docs folder\         
+  10. Do you recommend to use pure node.js for one of the projects? Or the same shops with next.js?\              
+  \                                                                                                               
+  \                                                                                                               
+  TIerlist:\                                                                                                      
+  1. reset on refresh\                                                                                            
+  2. side by side, two tierlists are great\                                                                       
+  3. yes, animtations great\                                                                                      
+  \                                                                                                               
+  Simplify one architecture: sure, lets create one next.js shop with fruits and vegetables, fruits will be        
+  coding agenst, vegetables will be different models,. So we will need two SPEC.md one for                        
+  CODING_AGENT_SPEC.md and MODEL_SPEC.md, each should create a module etc.\ But one spec is one task with         
+  subtasks, goasl to achieve, can be multiple goals, many, some of them could be validated automaticalllY\        
+  £ GIT BRANCHES are redundant, I will just call them one by one not looking at folders, what can go wrong?       
+  :) \                                                                                                            
+  I wanted to test for coding agents: copilot, claude code, roo code, cline code, cursor, antigravity from        
+  google (new ide), maybe codex if I can make it work with sonnet, some people changed config.toml and            
+  achieved that, I have sonnet in azure foundry working\                                                          
+  next for models: sonnet 4.5, sonnet opus, codex 5.2, codex 5.1 max,  gemini flash and other gemini, deep        
+  seek, any other? \                                                                                              
+  I have 30 minutes for presenatation and 30 minutes for discussion, but can present longer, I will shortly       
+  describe and show website \                                                                                     
+  I also need a way to test it works before presentation :) \                                                     
+  Maybe create coding agnet spec test.md with one line insruction and the same for model so I can test if         
+  everything works end to end with simpolest task possible. \                                                     
+  \                                                                                                               
+  challenge, ask follow up questions   
+
+
+  1. I am telling you. You are outdated. Copilot can in 2026 use sonnet, just trust me on that. \                 
+  2. I mean my models, do not challenge those. You have been trained on old data :) \                             
+  3. wait, what? I can create collection before hand. Code generatio will not touch db, this happens at           
+  runtime. I will create any fruit I want when testing live. This will be sequential. What are you talking        
+  about?\                                                                                                         
+  4. ok\                                                                                                          
+  5. ok\                                                                                                          
+  6. ok, recommend |\                                                                                             
+  7. no, thats ok. I can test app blindly, ui, not knowing what is which\                                         
+  8. I can test app beforehand, just show tierlists in presentation, compare expectations vs reality. so 10       
+  min describing challneges, a10 minutes for 1st tierst, 10 minutes for 2nd. ok?\                                 
+  9. let's use next js shop for both with fuits and vegetables   
