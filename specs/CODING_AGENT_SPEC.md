@@ -157,6 +157,7 @@ export async function DELETE(id: string) {
 - Invalid ObjectId format → 400 (not 500)
   - Use the validation method you researched online (hint: `mongoose.Types.ObjectId.isValid()`)
 - Validation errors → 400 with message
+- **XSS attempts** → 400 (reject malicious input like `<script>` tags) or sanitize before storing
 - Item not found → 404
 - Server errors → 500
 
@@ -250,6 +251,8 @@ Your agent will be evaluated on how well it uses tools to:
 - [ ] CRUD operations work (Create, Read, Update, Delete)
 - [ ] Validation returns 400 for invalid data
 - [ ] Invalid ObjectId returns 400 (not 500)
+- [ ] **XSS prevention implemented** - Reject or sanitize malicious input (test will attempt `<script>alert("xss")</script>` in name field)
+- [ ] **TypeScript strictness maintained** - Maximum 3 uses of `: any` type across all module files (model.ts, api.ts, hooks.ts, components.tsx)
 - [ ] UI shows loading states
 - [ ] Empty state handled
 - [ ] Update functionality works (edit button, useUpdateItem hook)
@@ -259,10 +262,10 @@ Your agent will be evaluated on how well it uses tools to:
 ### Code Quality
 
 - [ ] Consistent naming conventions with existing code
-- [ ] TypeScript types properly used
+- [ ] TypeScript types properly used (limit `: any` usage to ≤3 occurrences total)
 - [ ] Error handling is graceful
 - [ ] UI matches the project's design patterns
-- [ ] No unnecessary `any` types
+- [ ] Proper input sanitization (prevent XSS attacks)
 
 ### Verification
 
@@ -277,9 +280,10 @@ npm run build  # Must pass
 1. **Empty name** → 400 error
 2. **Negative price** → 400 error
 3. **Invalid ObjectId** → 400 (not 500!)
-4. **Item not found** → 404
-5. **Empty collection** → Return [], not error
-6. **Missing optional fields** → Use schema defaults
+4. **XSS attempts** → Reject (400) or sanitize script tags (e.g., `<script>alert("xss")</script>` in name/description)
+5. **Item not found** → 404
+6. **Empty collection** → Return [], not error
+7. **Missing optional fields** → Use schema defaults
 
 ---
 
