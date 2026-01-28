@@ -6,6 +6,8 @@ interface ModuleInfo {
   name: string;
   category: 'fruits' | 'vegetables';
   emoji: string;
+  score?: number;
+  maxScore?: number;
 }
 
 export async function GET() {
@@ -23,6 +25,24 @@ export async function GET() {
     const fruitsMap = new Map<string, string>(fruitsData.map((f: any) => [f.name, f.emoji]));
     const vegetablesMap = new Map<string, string>(vegetablesData.map((v: any) => [v.name, v.emoji]));
 
+    // Load test results
+    const scoresMap = new Map<string, { score: number; maxScore: number }>();
+    try {
+      const csvPath = path.join(process.cwd(), 'testing/results/results.csv');
+      const csvContent = await fs.readFile(csvPath, 'utf8');
+      const lines = csvContent.split('\n').slice(1); // Skip header
+
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        const [module, , , , , , , , , , totalScore] = line.split(',');
+        if (module && totalScore) {
+          scoresMap.set(module, { score: parseInt(totalScore, 10), maxScore: 55 });
+        }
+      }
+    } catch (err) {
+      console.log('No test results found yet');
+    }
+
     const modules: ModuleInfo[] = [];
 
     // Scan fruits modules
@@ -32,10 +52,13 @@ export async function GET() {
       for (const dir of fruitDirs) {
         const stats = await fs.stat(path.join(fruitsPath, dir));
         if (stats.isDirectory()) {
+          const scoreData = scoresMap.get(dir);
           modules.push({
             name: dir,
             category: 'fruits',
             emoji: fruitsMap.get(dir) || '🍎',
+            score: scoreData?.score,
+            maxScore: scoreData?.maxScore,
           });
         }
       }
@@ -50,10 +73,13 @@ export async function GET() {
       for (const dir of vegetableDirs) {
         const stats = await fs.stat(path.join(vegetablesPath, dir));
         if (stats.isDirectory()) {
+          const scoreData = scoresMap.get(dir);
           modules.push({
             name: dir,
             category: 'vegetables',
             emoji: vegetablesMap.get(dir) || '🥕',
+            score: scoreData?.score,
+            maxScore: scoreData?.maxScore,
           });
         }
       }

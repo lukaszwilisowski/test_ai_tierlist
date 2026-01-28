@@ -13,6 +13,8 @@ interface DraggableItemProps {
   revealedText?: string;
   revealedColor?: string;
   revealedTextColor?: string;
+  score?: number;
+  maxScore?: number;
   onDoubleClick: () => void;
 }
 
@@ -26,6 +28,8 @@ export function DraggableItem({
   revealedText,
   revealedColor,
   revealedTextColor,
+  score,
+  maxScore,
   onDoubleClick,
 }: DraggableItemProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -52,15 +56,22 @@ export function DraggableItem({
       onDoubleClick={onDoubleClick}
       className={`
         min-w-[120px] px-4 py-3 rounded-lg cursor-grab active:cursor-grabbing
-        flex items-center justify-center text-center font-semibold text-sm
+        flex flex-col items-center justify-center text-center font-semibold text-sm
         transition-all duration-300
         ${revealed ? 'ring-2 ring-yellow-400 shadow-lg' : 'shadow'}
         hover:scale-105
       `}
       title={revealed ? revealedText : 'Double-click to reveal'}
     >
-      {emoji && !revealed && <span className="text-2xl mr-2">{emoji}</span>}
-      <span className="whitespace-nowrap">{text}</span>
+      <div className="flex items-center">
+        {emoji && !revealed && <span className="text-2xl mr-2">{emoji}</span>}
+        <span className="whitespace-nowrap">{text}</span>
+      </div>
+      {score !== undefined && maxScore !== undefined && (
+        <div className="text-xs mt-1 opacity-80 font-normal">
+          {score}/{maxScore}
+        </div>
+      )}
     </div>
   );
 }

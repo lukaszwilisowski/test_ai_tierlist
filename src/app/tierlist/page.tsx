@@ -24,6 +24,8 @@ interface TierItem {
   revealedTextColor?: string;
   category?: 'fruits' | 'vegetables';
   moduleName?: string;
+  score?: number;
+  maxScore?: number;
 }
 
 interface AgentData {
@@ -42,6 +44,8 @@ interface ModuleData {
   name: string;
   category: 'fruits' | 'vegetables';
   emoji: string;
+  score?: number;
+  maxScore?: number;
 }
 
 const TIERS: TierId[] = ['s', 'a', 'b', 'c', 'd', 'f'];
@@ -118,6 +122,8 @@ export default function TierlistPage() {
       emoji: module.emoji,
       category: module.category,
       moduleName: module.name,
+      score: module.score,
+      maxScore: module.maxScore,
     }));
 
     setRealityTiers({
@@ -330,6 +336,8 @@ export default function TierlistPage() {
                         revealedText={item.revealedText}
                         revealedColor={item.revealedColor}
                         revealedTextColor={item.revealedTextColor}
+                        score={item.score}
+                        maxScore={item.maxScore}
                         onDoubleClick={() => handleReveal(item)}
                       />
                     ))}
@@ -348,6 +356,8 @@ export default function TierlistPage() {
                       revealedText={item.revealedText}
                       revealedColor={item.revealedColor}
                       revealedTextColor={item.revealedTextColor}
+                      score={item.score}
+                      maxScore={item.maxScore}
                       onDoubleClick={() => handleReveal(item)}
                     />
                   ))}

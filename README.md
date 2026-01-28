@@ -1,3 +1,7 @@
+```
+pnpm run test:modules
+```
+
 How to run Agents as CLI?
 
 1. Claude

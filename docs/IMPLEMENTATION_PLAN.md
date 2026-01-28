@@ -300,8 +300,8 @@ Ensure all `.secrets/fruits/*.json` and `.secrets/vegetables/*.json` are populat
 | Documentation | `docs/` |
 | Agent spec | `specs/CODING_AGENT_SPEC.md` |
 | Model spec | `specs/MODEL_SPEC.md` |
-| Fruit names | `available-names/fruits.txt` |
-| Vegetable names | `available-names/vegetables.txt` |
+| Fruit names | `data/fruits.json` |
+| Vegetable names | `data/vegetables.json` |
 | Secret mappings | `.secrets/` |
 | Test results | `testing/results/results.csv` |
 

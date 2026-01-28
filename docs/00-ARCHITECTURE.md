@@ -63,9 +63,11 @@ ai-tierlist-experiment/
 ├── testing/
 │   ├── run-tests.ts                    # Automated test runner
 │   └── results/                        # Test output directory
-├── available-names/
-│   ├── fruits.txt                      # List of available fruit names
-│   └── vegetables.txt                  # List of available vegetable names
+├── data/
+│   ├── fruits.json                     # Available fruit names with emojis
+│   ├── vegetables.json                 # Available vegetable names with emojis
+│   ├── coding-agents.json              # Agent metadata
+│   └── llm-models.json                 # Model metadata
 └── docs/                               # This documentation
 ```
 
@@ -120,8 +122,8 @@ The only shared code is:
 ```
 1. PREPARATION
    ┌─────────────────────────────────────────────────┐
-   │ fruits.txt contains: apple, banana, cherry...   │
-   │ vegetables.txt contains: carrot, potato...      │
+   │ data/fruits.json contains: apple, banana...     │
+   │ data/vegetables.json contains: carrot, potato.. │
    └─────────────────────────────────────────────────┘
                           │
                           ▼

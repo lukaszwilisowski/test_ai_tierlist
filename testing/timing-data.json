@@ -1,0 +1,87 @@
+{
+  "agents": [
+    {
+      "agent": "Cursor",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "GitHub Copilot",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "Claude Code",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "Roo Code",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "Cline",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "Antigravity",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "agent": "Codex CLI",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    }
+  ],
+  "models": [
+    {
+      "model": "Sonnet 4.5",
+      "agent": "Claude Code",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "Opus 4.5",
+      "agent": "Claude Code",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "Codex 5.2",
+      "agent": "GitHub Copilot",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "Codex 5.1 Max",
+      "agent": "GitHub Copilot",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "Gemini 3 Pro",
+      "agent": "Cursor",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "Gemini 3 Flash",
+      "agent": "Cursor",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    },
+    {
+      "model": "DeepSeek",
+      "agent": "Any",
+      "durationMinutes": 0,
+      "durationSeconds": 0
+    }
+  ],
+  "instructions": {
+    "howToUse": "Record duration in minutes and seconds for each agent/model test",
+    "format": "Duration in whole minutes and seconds"
+  }
+}

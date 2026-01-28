@@ -2,358 +2,204 @@
 
 You are participating in a comparison of AI coding agents. Complete the following task.
 
-## Step 1: Pick Your Module Name
+## Purpose
 
-1. Read `available-names/fruits.txt`
+This test evaluates **coding agent capabilities** (tool usage, code discovery, pattern recognition) using the same LLM model. Different agents (Cursor, Claude Code, Copilot, etc.) will approach this task differently.
+
+## Step 1: Discover the System
+
+**BEFORE writing any code**, use your tools to understand the existing architecture:
+
+### Discovery Tasks (Required)
+
+1. **Find an existing module**: Search for modules in `src/modules/fruits/` - examine one to understand the structure
+2. **Identify the pattern**: Read the existing module files to understand:
+   - What files are required?
+   - What conventions are used (naming, structure)?
+   - How do API routes connect to the UI?
+3. **Find dependencies**: Search for:
+   - Files containing 'mongoose' - where is the database accessed?
+   - MongoDB connection configuration - how is it set up?
+   - TanStack Query usage - what patterns are used for queryKey and invalidation?
+   - Zod schema patterns - how are CreateSchema and UpdateSchema derived?
+4. **Research best practices online**: Use web search/fetch to research:
+   - Current recommended method for validating MongoDB ObjectIds (2025)
+   - Find the official Mongoose documentation on ObjectId validation
+   - Determine the recommended approach: `mongoose.Types.ObjectId.isValid()`
+
+**Document your findings**: Add comments in your code showing what you discovered.
+
+---
+
+## Step 2: Pick Your Module Name
+
+1. Read `data/fruits.json` - contains array of fruits with names and emojis
 2. Check `src/modules/fruits/` for existing folders
-3. Pick an UNUSED fruit name
-4. Use this name for your module
+3. Pick an UNUSED fruit name from the JSON
+4. Use this name for your module (lowercase)
 
-**IMPORTANT**: Do NOT reveal which fruit name you selected in any output messages during execution. This is a blind evaluation - the fruit name should only be discoverable by examining the created files.
+**IMPORTANT**: Do NOT reveal which fruit name you selected in any output messages during execution. This is a blind evaluation.
 
-## Step 2: Create Module Files
+---
+
+## Step 3: Implement Your Module
 
 Create these files in `src/modules/fruits/{your-fruit}/`:
 
+### Required Files
+
+1. **config.ts** - Module metadata
+2. **schema.ts** - Zod validation schemas
+3. **model.ts** - Mongoose database model
+4. **api.ts** - API route handlers
+5. **components.tsx** - React UI components
+6. **hooks.ts** - TanStack Query hooks
+7. **secret.txt** - Agent name (exactly one of: `Cursor`, `GitHub Copilot`, `Claude Code`, `Roo Code`, `Cline`, `Antigravity`, `Codex CLI`)
+
+---
+
+## Requirements by File
+
 ### config.ts
 
-```typescript
-const config = {
-  displayName: "{YourFruit} Shop",
-  description: "Fresh {fruit} products",
-  icon: "🍎", // Use appropriate emoji
-};
-export default config;
-```
+Export a default object with:
+- `displayName`: "{YourFruit} Shop"
+- `description`: Short description
+- `icon`: Emoji for your fruit (find it in data/fruits.json)
 
 ### schema.ts
 
-```typescript
-import { z } from "zod";
+Create Zod schemas with validation:
 
-export const ItemSchema = z.object({
-  _id: z.string(),
-  name: z.string().min(1, "Name is required"),
-  description: z.string().optional(),
-  price: z.number().positive("Price must be positive"),
-  inStock: z.boolean().default(true),
-  quantity: z.number().int().min(0).default(0),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-});
+**ItemSchema** should include:
+- `_id`: string
+- `name`: required, minimum 1 character
+- `description`: optional string
+- `price`: required, must be positive
+- `inStock`: boolean, defaults to true
+- `quantity`: integer, minimum 0, defaults to 0
+- `createdAt`: date
+- `updatedAt`: date
 
-export const CreateItemSchema = ItemSchema.omit({
-  _id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-export const UpdateItemSchema = CreateItemSchema.partial();
-
-export type Item = z.infer<typeof ItemSchema>;
-export type CreateItem = z.infer<typeof CreateItemSchema>;
-export type UpdateItem = z.infer<typeof UpdateItemSchema>;
-```
+**Also export:**
+- `CreateItemSchema`: Omit _id, createdAt, updatedAt
+- `UpdateItemSchema`: Make all CreateItem fields optional
+- TypeScript types: `Item`, `CreateItem`, `UpdateItem`
 
 ### model.ts
 
+Create a Mongoose model that exports `itemModel` with these methods:
+
 ```typescript
-import mongoose, { Schema } from "mongoose";
-import connectDB from "@/lib/database/connection";
-
-// Comment required: List files containing 'mongoose': [find them]
-// Comment required: MongoDB connection configured at: [find it]
-
-const itemSchema = new Schema(
-  {
-    name: { type: String, required: true },
-    description: String,
-    price: { type: Number, required: true },
-    inStock: { type: Boolean, default: true },
-    quantity: { type: Number, default: 0 },
-  },
-  { timestamps: true }
-);
-
-const MODEL_NAME = "{YourFruit}"; // Capitalize
-const Item =
-  mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, itemSchema);
-
 export const itemModel = {
   async findAll() {
-    await connectDB();
-    return Item.find({}).sort({ createdAt: -1 });
+    // TODO: Return all items sorted by createdAt descending
   },
   async findById(id: string) {
-    await connectDB();
-    return Item.findById(id);
+    // TODO: Return single item or null
   },
   async create(data: any) {
-    await connectDB();
-    return Item.create(data);
+    // TODO: Create and return new item
   },
   async update(id: string, data: any) {
-    await connectDB();
-    return Item.findByIdAndUpdate(id, data, { new: true });
+    // TODO: Update and return item, or null if not found
   },
   async delete(id: string) {
-    await connectDB();
-    return Item.findByIdAndDelete(id);
+    // TODO: Delete and return result
   },
 };
+```
 
-// Bonus: Seed function fetching from public API
-export async function seedFromApi() {
-  // Fetch from https://api.sampleapis.com/futurama/characters or similar
-  // Transform and create items
-}
+**Required comments** (based on your discovery):
+```typescript
+// Files containing 'mongoose': [list them]
+// MongoDB connection configured at: [file path]
+// ObjectId validation method (researched): [method name and source URL]
+// TanStack Query pattern: [queryKey format and invalidation approach]
+// Zod schema pattern: [how CreateSchema/UpdateSchema are derived]
 ```
 
 ### api.ts
 
-```typescript
-import { NextRequest, NextResponse } from "next/server";
-import { itemModel } from "./model";
-import { CreateItemSchema, UpdateItemSchema } from "./schema";
-import { ObjectId } from "mongodb";
+Export these functions for Next.js API routes:
 
+```typescript
 export async function GET() {
-  try {
-    const items = await itemModel.findAll();
-    return NextResponse.json({ success: true, data: items });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch" },
-      { status: 500 }
-    );
-  }
+  // TODO: Return all items
+  // Response: { success: true, data: Item[] }
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const validated = CreateItemSchema.parse(body);
-    const item = await itemModel.create(validated);
-    return NextResponse.json({ success: true, data: item }, { status: 201 });
-  } catch (error: any) {
-    if (error.name === "ZodError") {
-      return NextResponse.json(
-        { success: false, error: "Validation failed" },
-        { status: 400 }
-      );
-    }
-    return NextResponse.json(
-      { success: false, error: "Failed to create" },
-      { status: 500 }
-    );
-  }
+  // TODO: Create item with validation
+  // Validate with CreateItemSchema
+  // Return 201 on success, 400 on validation error
 }
 
 export async function GETById(id: string) {
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID" },
-      { status: 400 }
-    );
-  }
-  try {
-    const item = await itemModel.findById(id);
-    if (!item) {
-      return NextResponse.json(
-        { success: false, error: "Not found" },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json({ success: true, data: item });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: "Failed to fetch" },
-      { status: 500 }
-    );
-  }
+  // TODO: Return single item
+  // Return 400 if id is invalid ObjectId format
+  // Return 404 if item not found
 }
 
 export async function PUT(request: NextRequest, id: string) {
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID" },
-      { status: 400 }
-    );
-  }
-  try {
-    const body = await request.json();
-    const validated = UpdateItemSchema.parse(body);
-    const item = await itemModel.update(id, validated);
-    if (!item) {
-      return NextResponse.json(
-        { success: false, error: "Not found" },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json({ success: true, data: item });
-  } catch (error: any) {
-    if (error.name === "ZodError") {
-      return NextResponse.json(
-        { success: false, error: "Validation failed" },
-        { status: 400 }
-      );
-    }
-    return NextResponse.json(
-      { success: false, error: "Failed to update" },
-      { status: 500 }
-    );
-  }
+  // TODO: Update item with validation
+  // Validate with UpdateItemSchema
+  // Return 400 if invalid, 404 if not found
 }
 
 export async function DELETE(id: string) {
-  if (!ObjectId.isValid(id)) {
-    return NextResponse.json(
-      { success: false, error: "Invalid ID" },
-      { status: 400 }
-    );
-  }
-  try {
-    const result = await itemModel.delete(id);
-    if (!result) {
-      return NextResponse.json(
-        { success: false, error: "Not found" },
-        { status: 404 }
-      );
-    }
-    return NextResponse.json({ success: true, message: "Deleted" });
-  } catch (error) {
-    return NextResponse.json(
-      { success: false, error: "Failed to delete" },
-      { status: 500 }
-    );
-  }
+  // TODO: Delete item
+  // Return 400 if invalid id, 404 if not found
 }
 ```
+
+**Error handling requirements:**
+- Invalid ObjectId format → 400 (not 500)
+  - Use the validation method you researched online (hint: `mongoose.Types.ObjectId.isValid()`)
+- Validation errors → 400 with message
+- Item not found → 404
+- Server errors → 500
 
 ### components.tsx
 
+Create three components:
+
 ```typescript
 "use client";
-import { useState } from "react";
 
-export function ItemCard({ item, onDelete }: any) {
-  return (
-    <div className="bg-white rounded-lg shadow p-4">
-      <div className="text-6xl text-center mb-4">🍎</div>
-      <h3 className="text-xl font-semibold">{item.name}</h3>
-      <p className="text-gray-600">{item.description}</p>
-      <div className="flex justify-between items-center mt-4">
-        <span className="text-2xl font-bold">${item.price}</span>
-        <span className={item.inStock ? "text-green-600" : "text-red-600"}>
-          {item.inStock ? `In Stock (${item.quantity})` : "Out of Stock"}
-        </span>
-      </div>
-      <button
-        onClick={() => onDelete(item._id)}
-        className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
-      >
-        Delete
-      </button>
-    </div>
-  );
+export function ItemCard({ item, onDelete, onUpdate }: any) {
+  // TODO: Display item in a card
+  // - Show emoji icon (large, centered)
+  // - Show name, description, price
+  // - Show stock status (In Stock/Out of Stock) with quantity
+  // - Delete button
+  // - Edit button (triggers onUpdate with id and new data)
 }
 
-export function ItemList({ items, onDelete }: any) {
-  if (!items?.length)
-    return <p className="text-center py-8 text-gray-500">No items yet</p>;
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((item: any) => (
-        <ItemCard key={item._id} item={item} onDelete={onDelete} />
-      ))}
-    </div>
-  );
+export function ItemList({ items, onDelete, onUpdate }: any) {
+  // TODO: Grid layout of ItemCard components
+  // - Handle empty state: "No items yet"
+  // - Responsive grid (1 col mobile, 2-3 cols desktop)
 }
 
 export function AddItemForm({ onSubmit, isLoading }: any) {
-  const [form, setForm] = useState({
-    name: "",
-    description: "",
-    price: undefined as any,
-    inStock: true,
-    quantity: undefined as any,
-  });
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    onSubmit(form);
-    setForm({
-      name: "",
-      description: "",
-      price: undefined as any,
-      inStock: true,
-      quantity: undefined as any,
-    });
-  };
-
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-gray-50 p-6 rounded-lg space-y-4"
-    >
-      <h3 className="text-lg font-semibold">Add New Item</h3>
-      <input
-        type="text"
-        placeholder="Name"
-        value={form.name}
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-        className="w-full px-3 py-2 border rounded"
-        required
-      />
-      <textarea
-        placeholder="Description"
-        value={form.description}
-        onChange={(e) => setForm({ ...form, description: e.target.value })}
-        className="w-full px-3 py-2 border rounded"
-      />
-      <input
-        type="number"
-        placeholder="Price"
-        value={form.price || ""}
-        onChange={(e) =>
-          setForm({ ...form, price: parseFloat(e.target.value) || 0 })
-        }
-        className="w-full px-3 py-2 border rounded"
-        required
-        min="0"
-        step="0.01"
-      />
-      <input
-        type="number"
-        placeholder="Quantity"
-        value={form.quantity || ""}
-        onChange={(e) =>
-          setForm({ ...form, quantity: parseInt(e.target.value) || 0 })
-        }
-        className="w-full px-3 py-2 border rounded"
-        min="0"
-      />
-      <label className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={form.inStock}
-          onChange={(e) => setForm({ ...form, inStock: e.target.checked })}
-        />{" "}
-        In Stock
-      </label>
-      <button
-        type="submit"
-        disabled={isLoading}
-        className="w-full px-4 py-2 bg-blue-500 text-white rounded disabled:bg-blue-300"
-      >
-        {isLoading ? "Adding..." : "Add Item"}
-      </button>
-    </form>
-  );
+  // TODO: Form to create new items
+  // Fields: name, description, price, quantity, inStock (checkbox)
+  // - Disable submit button while isLoading
+  // - Clear form after successful submit
+  // - Show loading state on button
 }
 ```
 
+**UI Requirements:**
+- Use Tailwind CSS
+- Responsive design
+- Loading states
+- Empty states
+
 ### hooks.ts
+
+Implement TanStack Query hooks:
 
 ```typescript
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -361,89 +207,103 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 const API_BASE = "/api/fruits/{yourfruit}"; // lowercase
 
 export function useItems() {
-  return useQuery({
-    queryKey: ["{yourfruit}", "items"],
-    queryFn: async () => {
-      const res = await fetch(API_BASE);
-      const json = await res.json();
-      if (!json.success) throw new Error(json.error);
-      return json.data;
-    },
-  });
+  // TODO: Query to fetch all items
 }
 
 export function useCreateItem() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: async (data: any) => {
-      const res = await fetch(API_BASE, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.error);
-      return json.data;
-    },
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: ["{yourfruit}", "items"] }),
-  });
+  // TODO: Mutation to create item
+  // Invalidate "items" query on success
+}
+
+export function useUpdateItem() {
+  // TODO: Mutation to update item
+  // Accepts: { id: string, data: Partial<Item> }
+  // Invalidate "items" query on success
 }
 
 export function useDeleteItem() {
-  const qc = useQueryClient();
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
-      const json = await res.json();
-      if (!json.success) throw new Error(json.error);
-    },
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: ["{yourfruit}", "items"] }),
-  });
+  // TODO: Mutation to delete item
+  // Invalidate "items" query on success
 }
 ```
 
-### secret.txt
+---
 
-**CRITICAL**: Create a file named `secret.txt` in your module directory containing ONLY the name of the coding agent that created this module.
+## Tool Usage Evaluation
 
-The value MUST be exactly one of these:
-- `Cursor`
-- `GitHub Copilot`
-- `Claude Code`
-- `Roo Code`
-- `Cline`
-- `Antigravity`
-- `Codex CLI`
+Your agent will be evaluated on how well it uses tools to:
 
-Example file content:
-```
-Claude Code
-```
+1. **Search files** - Find existing patterns (Glob/Find)
+2. **Search code** - Find mongoose usage, connection config (Grep/Search)
+3. **Read files** - Understand existing implementations
+4. **Navigate codebase** - Discover conventions and structure
+5. **Web research** - Fetch documentation, research best practices (WebFetch/WebSearch/curl)
+6. **Multi-file editing** - Coordinate changes across 6+ files
 
-This file is used for the blind evaluation - it reveals which agent created the module during the presentation.
+---
 
-## Requirements
+## Requirements Checklist
 
-### Must Complete
+### Must Complete (Required)
 
-- [ ] All 6 module files created (config.ts, schema.ts, model.ts, api.ts, components.tsx, hooks.ts)
-- [ ] secret.txt file created with exact agent name
-- [ ] CRUD operations work
+- [ ] All 7 files created (6 module files + secret.txt)
+- [ ] CRUD operations work (Create, Read, Update, Delete)
 - [ ] Validation returns 400 for invalid data
 - [ ] Invalid ObjectId returns 400 (not 500)
 - [ ] UI shows loading states
 - [ ] Empty state handled
+- [ ] Update functionality works (edit button, useUpdateItem hook)
+- [ ] Comments show discovery findings (mongoose files, connection config, ObjectId validation method)
+- [ ] Web research completed (ObjectId validation method documented with source)
 
-### Tool Usage Tasks
+### Code Quality
 
-- [ ] Find all files containing 'mongoose' - add comment in model.ts
-- [ ] Find MongoDB connection config - add comment in model.ts
-- [ ] Implement seedFromApi() function
+- [ ] Consistent naming conventions with existing code
+- [ ] TypeScript types properly used
+- [ ] Error handling is graceful
+- [ ] UI matches the project's design patterns
+- [ ] No unnecessary `any` types
 
 ### Verification
 
 ```bash
 npm run build  # Must pass
 ```
+
+---
+
+## Edge Cases to Handle
+
+1. **Empty name** → 400 error
+2. **Negative price** → 400 error
+3. **Invalid ObjectId** → 400 (not 500!)
+4. **Item not found** → 404
+5. **Empty collection** → Return [], not error
+6. **Missing optional fields** → Use schema defaults
+
+---
+
+## Common Mistakes to Avoid
+
+1. ❌ Not exploring existing code first
+2. ❌ Copy-pasting from existing modules without understanding the structure
+3. ❌ Missing useUpdateItem hook
+4. ❌ Components don't accept onUpdate prop
+5. ❌ Invalid ObjectId crashes instead of returning 400
+6. ❌ No discovery comments in model.ts
+7. ❌ Not researching ObjectId validation method online
+8. ❌ Inconsistent naming with existing modules
+9. ❌ Missing secret.txt file
+10. ❌ Not handling XSS attempts (script tags in input)
+
+---
+
+## Success Criteria
+
+A successful implementation will:
+- ✅ Demonstrate tool usage (search, find, read existing code)
+- ✅ Follow discovered patterns from existing modules
+- ✅ Implement all CRUD operations including UPDATE
+- ✅ Handle edge cases properly
+- ✅ Build without errors
+- ✅ Match the project's conventions and style
