@@ -38,7 +38,6 @@ Define Zod schemas with proper validation:
 - `name`: required, min 1 char
 - `description`: optional string
 - `price`: required, positive number
-- `image`: optional URL
 - `inStock`: boolean, default true
 - `quantity`: integer, min 0, default 0
 - `createdAt`, `updatedAt`: dates
@@ -75,15 +74,16 @@ Error handling requirements:
 ### components.tsx
 
 Create these components:
-- `ItemCard`: displays single item with delete button
+- `ItemCard`: displays single item with emoji icon (from fruits.json or vegetables.json), delete button
 - `ItemList`: grid of ItemCards, handles empty state
-- `AddItemForm`: form to create new items
+- `AddItemForm`: form to create new items with placeholders for all fields
 
 UI requirements:
 - Show loading states
 - Show error messages
 - Responsive grid layout
 - Tailwind CSS styling
+- Use emoji icons instead of images
 
 ### hooks.ts
 

@@ -1,0 +1,12 @@
+[
+  { "name": "apple", "emoji": "🍎" },
+  { "name": "banana", "emoji": "🍌" },
+  { "name": "cherry", "emoji": "🍒" },
+  { "name": "grape", "emoji": "🍇" },
+  { "name": "kiwi", "emoji": "🥝" },
+  { "name": "lemon", "emoji": "🍋" },
+  { "name": "mango", "emoji": "🥭" },
+  { "name": "orange", "emoji": "🍊" },
+  { "name": "strawberry", "emoji": "🍓" },
+  { "name": "watermelon", "emoji": "🍉" }
+]

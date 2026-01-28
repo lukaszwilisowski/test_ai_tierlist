@@ -32,7 +32,6 @@ export const ItemSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
   price: z.number().positive('Price must be positive'),
-  image: z.string().url().optional(),
   inStock: z.boolean().default(true),
   quantity: z.number().int().min(0).default(0),
   createdAt: z.date(),
@@ -64,7 +63,6 @@ const itemSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   price: { type: Number, required: true },
-  image: String,
   inStock: { type: Boolean, default: true },
   quantity: { type: Number, default: 0 },
 }, { timestamps: true });

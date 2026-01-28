@@ -1,0 +1,12 @@
+[
+  { "name": "broccoli", "emoji": "🥦" },
+  { "name": "carrot", "emoji": "🥕" },
+  { "name": "eggplant", "emoji": "🍆" },
+  { "name": "garlic", "emoji": "🧄" },
+  { "name": "jalapeno", "emoji": "🌶️" },
+  { "name": "kale", "emoji": "🥬" },
+  { "name": "mushroom", "emoji": "🍄" },
+  { "name": "onion", "emoji": "🧅" },
+  { "name": "spinach", "emoji": "🥬" },
+  { "name": "zucchini", "emoji": "🥒" }
+]

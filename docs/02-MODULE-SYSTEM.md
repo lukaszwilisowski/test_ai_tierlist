@@ -52,7 +52,6 @@ export const ItemSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
   price: z.number().positive('Price must be positive'),
-  image: z.string().url().optional(),
   inStock: z.boolean().default(true),
   quantity: z.number().int().min(0).default(0),
   createdAt: z.date(),
@@ -90,7 +89,6 @@ interface ItemDocument extends Document {
   name: string;
   description?: string;
   price: number;
-  image?: string;
   inStock: boolean;
   quantity: number;
 }
@@ -100,7 +98,6 @@ const itemSchema = new Schema(
     name: { type: String, required: true },
     description: { type: String },
     price: { type: Number, required: true },
-    image: { type: String },
     inStock: { type: Boolean, default: true },
     quantity: { type: Number, default: 0 },
   },
@@ -120,7 +117,6 @@ export const itemModel = {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
       inStock: item.inStock,
       quantity: item.quantity,
       createdAt: item.createdAt,
@@ -137,7 +133,6 @@ export const itemModel = {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
       inStock: item.inStock,
       quantity: item.quantity,
       createdAt: item.createdAt,
@@ -153,7 +148,6 @@ export const itemModel = {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
       inStock: item.inStock,
       quantity: item.quantity,
       createdAt: item.createdAt,
@@ -170,7 +164,6 @@ export const itemModel = {
       name: item.name,
       description: item.description,
       price: item.price,
-      image: item.image,
       inStock: item.inStock,
       quantity: item.quantity,
       createdAt: item.createdAt,
@@ -318,13 +311,7 @@ interface ItemCardProps {
 export function ItemCard({ item, onDelete, onUpdate }: ItemCardProps) {
   return (
     <div className="bg-white rounded-lg shadow p-4">
-      {item.image && (
-        <img
-          src={item.image}
-          alt={item.name}
-          className="w-full h-48 object-cover rounded mb-4"
-        />
-      )}
+      <div className="text-6xl text-center mb-4">🍎</div>
       <h3 className="text-xl font-semibold">{item.name}</h3>
       {item.description && (
         <p className="text-gray-600 mt-2">{item.description}</p>
@@ -391,10 +378,9 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
   const [formData, setFormData] = useState<CreateItem>({
     name: '',
     description: '',
-    price: 0,
-    image: '',
+    price: undefined as any,
     inStock: true,
-    quantity: 0,
+    quantity: undefined as any,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -403,10 +389,9 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
     setFormData({
       name: '',
       description: '',
-      price: 0,
-      image: '',
+      price: undefined as any,
       inStock: true,
-      quantity: 0,
+      quantity: undefined as any,
     });
   };
 
@@ -433,9 +418,9 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
         <input
           type="number"
           placeholder="Price"
-          value={formData.price}
+          value={formData.price || ''}
           onChange={(e) =>
-            setFormData({ ...formData, price: parseFloat(e.target.value) })
+            setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })
           }
           className="px-3 py-2 border rounded"
           required
@@ -443,18 +428,11 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
           step="0.01"
         />
         <input
-          type="url"
-          placeholder="Image URL"
-          value={formData.image}
-          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-          className="px-3 py-2 border rounded"
-        />
-        <input
           type="number"
           placeholder="Quantity"
-          value={formData.quantity}
+          value={formData.quantity || ''}
           onChange={(e) =>
-            setFormData({ ...formData, quantity: parseInt(e.target.value) })
+            setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })
           }
           className="px-3 py-2 border rounded"
           min="0"

@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Cursor",
+    "color": "#000000",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "GitHub Copilot",
+    "color": "#24292e",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Claude Code",
+    "color": "#D97706",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Roo Code",
+    "color": "#8B5CF6",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Cline",
+    "color": "#3B82F6",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Antigravity",
+    "color": "#10B981",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Codex CLI",
+    "color": "#EF4444",
+    "textColor": "#FFFFFF"
+  }
+]

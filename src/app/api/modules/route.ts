@@ -1,0 +1,72 @@
+import { NextResponse } from 'next/server';
+import fs from 'fs/promises';
+import path from 'path';
+
+interface ModuleInfo {
+  name: string;
+  category: 'fruits' | 'vegetables';
+  emoji: string;
+}
+
+export async function GET() {
+  try {
+    // Load JSON files
+    const fruitsJsonPath = path.join(process.cwd(), 'data', 'fruits.json');
+    const vegetablesJsonPath = path.join(process.cwd(), 'data', 'vegetables.json');
+
+    const fruitsJsonContent = await fs.readFile(fruitsJsonPath, 'utf8');
+    const vegetablesJsonContent = await fs.readFile(vegetablesJsonPath, 'utf8');
+
+    const fruitsData = JSON.parse(fruitsJsonContent);
+    const vegetablesData = JSON.parse(vegetablesJsonContent);
+
+    const fruitsMap = new Map<string, string>(fruitsData.map((f: any) => [f.name, f.emoji]));
+    const vegetablesMap = new Map<string, string>(vegetablesData.map((v: any) => [v.name, v.emoji]));
+
+    const modules: ModuleInfo[] = [];
+
+    // Scan fruits modules
+    const fruitsPath = path.join(process.cwd(), 'src/modules/fruits');
+    try {
+      const fruitDirs = await fs.readdir(fruitsPath);
+      for (const dir of fruitDirs) {
+        const stats = await fs.stat(path.join(fruitsPath, dir));
+        if (stats.isDirectory()) {
+          modules.push({
+            name: dir,
+            category: 'fruits',
+            emoji: fruitsMap.get(dir) || '🍎',
+          });
+        }
+      }
+    } catch (err) {
+      console.log('No fruits modules yet');
+    }
+
+    // Scan vegetables modules
+    const vegetablesPath = path.join(process.cwd(), 'src/modules/vegetables');
+    try {
+      const vegetableDirs = await fs.readdir(vegetablesPath);
+      for (const dir of vegetableDirs) {
+        const stats = await fs.stat(path.join(vegetablesPath, dir));
+        if (stats.isDirectory()) {
+          modules.push({
+            name: dir,
+            category: 'vegetables',
+            emoji: vegetablesMap.get(dir) || '🥕',
+          });
+        }
+      }
+    } catch (err) {
+      console.log('No vegetables modules yet');
+    }
+
+    return NextResponse.json({ success: true, data: modules });
+  } catch (error) {
+    console.error('Failed to scan modules:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to scan modules' },
+      { status: 500 }
+    );
+  }
+}

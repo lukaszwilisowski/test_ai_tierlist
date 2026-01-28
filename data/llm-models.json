@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Sonnet 4.5",
+    "color": "#D97706",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Opus 4.5",
+    "color": "#7C3AED",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Codex 5.2",
+    "color": "#10B981",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Codex 5.1 Max",
+    "color": "#059669",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Gemini 3 Pro",
+    "color": "#3B82F6",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "Gemini 3 Flash",
+    "color": "#60A5FA",
+    "textColor": "#FFFFFF"
+  },
+  {
+    "name": "DeepSeek",
+    "color": "#EC4899",
+    "textColor": "#FFFFFF"
+  }
+]
