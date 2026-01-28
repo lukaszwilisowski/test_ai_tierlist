@@ -1,9 +1,9 @@
 /**
  * ⚠️ INTERNAL DUMMY MODULE - DO NOT COPY ⚠️
- * 
+ *
  * This is a minimal stub module used only for build compatibility.
  * It contains no useful implementation patterns.
- * 
+ *
  * When creating new modules, DO NOT use this as a reference.
  * This module serves only to satisfy the dynamic import resolver.
  */
