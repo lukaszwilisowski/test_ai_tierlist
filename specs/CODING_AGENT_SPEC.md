@@ -9,29 +9,33 @@ You are participating in a comparison of AI coding agents. Complete the followin
 3. Pick an UNUSED fruit name
 4. Use this name for your module
 
+**IMPORTANT**: Do NOT reveal which fruit name you selected in any output messages during execution. This is a blind evaluation - the fruit name should only be discoverable by examining the created files.
+
 ## Step 2: Create Module Files
 
 Create these files in `src/modules/fruits/{your-fruit}/`:
 
 ### config.ts
+
 ```typescript
 const config = {
-  displayName: '{YourFruit} Shop',
-  description: 'Fresh {fruit} products',
-  icon: '🍎', // Use appropriate emoji
+  displayName: "{YourFruit} Shop",
+  description: "Fresh {fruit} products",
+  icon: "🍎", // Use appropriate emoji
 };
 export default config;
 ```
 
 ### schema.ts
+
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
 export const ItemSchema = z.object({
   _id: z.string(),
-  name: z.string().min(1, 'Name is required'),
+  name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
-  price: z.number().positive('Price must be positive'),
+  price: z.number().positive("Price must be positive"),
   inStock: z.boolean().default(true),
   quantity: z.number().int().min(0).default(0),
   createdAt: z.date(),
@@ -52,23 +56,28 @@ export type UpdateItem = z.infer<typeof UpdateItemSchema>;
 ```
 
 ### model.ts
+
 ```typescript
-import mongoose, { Schema } from 'mongoose';
-import connectDB from '@/lib/database/connection';
+import mongoose, { Schema } from "mongoose";
+import connectDB from "@/lib/database/connection";
 
 // Comment required: List files containing 'mongoose': [find them]
 // Comment required: MongoDB connection configured at: [find it]
 
-const itemSchema = new Schema({
-  name: { type: String, required: true },
-  description: String,
-  price: { type: Number, required: true },
-  inStock: { type: Boolean, default: true },
-  quantity: { type: Number, default: 0 },
-}, { timestamps: true });
+const itemSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    description: String,
+    price: { type: Number, required: true },
+    inStock: { type: Boolean, default: true },
+    quantity: { type: Number, default: 0 },
+  },
+  { timestamps: true }
+);
 
-const MODEL_NAME = '{YourFruit}'; // Capitalize
-const Item = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, itemSchema);
+const MODEL_NAME = "{YourFruit}"; // Capitalize
+const Item =
+  mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, itemSchema);
 
 export const itemModel = {
   async findAll() {
@@ -101,18 +110,22 @@ export async function seedFromApi() {
 ```
 
 ### api.ts
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
-import { itemModel } from './model';
-import { CreateItemSchema, UpdateItemSchema } from './schema';
-import { ObjectId } from 'mongodb';
+import { NextRequest, NextResponse } from "next/server";
+import { itemModel } from "./model";
+import { CreateItemSchema, UpdateItemSchema } from "./schema";
+import { ObjectId } from "mongodb";
 
 export async function GET() {
   try {
     const items = await itemModel.findAll();
     return NextResponse.json({ success: true, data: items });
   } catch (error) {
-    return NextResponse.json({ success: false, error: 'Failed to fetch' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch" },
+      { status: 500 }
+    );
   }
 }
 
@@ -123,82 +136,122 @@ export async function POST(request: NextRequest) {
     const item = await itemModel.create(validated);
     return NextResponse.json({ success: true, data: item }, { status: 201 });
   } catch (error: any) {
-    if (error.name === 'ZodError') {
-      return NextResponse.json({ success: false, error: 'Validation failed' }, { status: 400 });
+    if (error.name === "ZodError") {
+      return NextResponse.json(
+        { success: false, error: "Validation failed" },
+        { status: 400 }
+      );
     }
-    return NextResponse.json({ success: false, error: 'Failed to create' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to create" },
+      { status: 500 }
+    );
   }
 }
 
 export async function GETById(id: string) {
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json({ success: false, error: 'Invalid ID' }, { status: 400 });
+    return NextResponse.json(
+      { success: false, error: "Invalid ID" },
+      { status: 400 }
+    );
   }
   try {
     const item = await itemModel.findById(id);
     if (!item) {
-      return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: "Not found" },
+        { status: 404 }
+      );
     }
     return NextResponse.json({ success: true, data: item });
   } catch (error) {
-    return NextResponse.json({ success: false, error: 'Failed to fetch' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to fetch" },
+      { status: 500 }
+    );
   }
 }
 
 export async function PUT(request: NextRequest, id: string) {
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json({ success: false, error: 'Invalid ID' }, { status: 400 });
+    return NextResponse.json(
+      { success: false, error: "Invalid ID" },
+      { status: 400 }
+    );
   }
   try {
     const body = await request.json();
     const validated = UpdateItemSchema.parse(body);
     const item = await itemModel.update(id, validated);
     if (!item) {
-      return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: "Not found" },
+        { status: 404 }
+      );
     }
     return NextResponse.json({ success: true, data: item });
   } catch (error: any) {
-    if (error.name === 'ZodError') {
-      return NextResponse.json({ success: false, error: 'Validation failed' }, { status: 400 });
+    if (error.name === "ZodError") {
+      return NextResponse.json(
+        { success: false, error: "Validation failed" },
+        { status: 400 }
+      );
     }
-    return NextResponse.json({ success: false, error: 'Failed to update' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to update" },
+      { status: 500 }
+    );
   }
 }
 
 export async function DELETE(id: string) {
   if (!ObjectId.isValid(id)) {
-    return NextResponse.json({ success: false, error: 'Invalid ID' }, { status: 400 });
+    return NextResponse.json(
+      { success: false, error: "Invalid ID" },
+      { status: 400 }
+    );
   }
   try {
     const result = await itemModel.delete(id);
     if (!result) {
-      return NextResponse.json({ success: false, error: 'Not found' }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: "Not found" },
+        { status: 404 }
+      );
     }
-    return NextResponse.json({ success: true, message: 'Deleted' });
+    return NextResponse.json({ success: true, message: "Deleted" });
   } catch (error) {
-    return NextResponse.json({ success: false, error: 'Failed to delete' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Failed to delete" },
+      { status: 500 }
+    );
   }
 }
 ```
 
 ### components.tsx
+
 ```typescript
-'use client';
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 
 export function ItemCard({ item, onDelete }: any) {
   return (
     <div className="bg-white rounded-lg shadow p-4">
-      {item.image && <img src={item.image} alt={item.name} className="w-full h-48 object-cover rounded mb-4" />}
+      <div className="text-6xl text-center mb-4">🍎</div>
       <h3 className="text-xl font-semibold">{item.name}</h3>
       <p className="text-gray-600">{item.description}</p>
       <div className="flex justify-between items-center mt-4">
         <span className="text-2xl font-bold">${item.price}</span>
-        <span className={item.inStock ? 'text-green-600' : 'text-red-600'}>
-          {item.inStock ? `In Stock (${item.quantity})` : 'Out of Stock'}
+        <span className={item.inStock ? "text-green-600" : "text-red-600"}>
+          {item.inStock ? `In Stock (${item.quantity})` : "Out of Stock"}
         </span>
       </div>
-      <button onClick={() => onDelete(item._id)} className="mt-4 px-4 py-2 bg-red-500 text-white rounded">
+      <button
+        onClick={() => onDelete(item._id)}
+        className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
+      >
         Delete
       </button>
     </div>
@@ -206,36 +259,94 @@ export function ItemCard({ item, onDelete }: any) {
 }
 
 export function ItemList({ items, onDelete }: any) {
-  if (!items?.length) return <p className="text-center py-8 text-gray-500">No items yet</p>;
+  if (!items?.length)
+    return <p className="text-center py-8 text-gray-500">No items yet</p>;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {items.map((item: any) => <ItemCard key={item._id} item={item} onDelete={onDelete} />)}
+      {items.map((item: any) => (
+        <ItemCard key={item._id} item={item} onDelete={onDelete} />
+      ))}
     </div>
   );
 }
 
 export function AddItemForm({ onSubmit, isLoading }: any) {
-  const [form, setForm] = useState({ name: '', description: '', price: 0, image: '', inStock: true, quantity: 0 });
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: undefined as any,
+    inStock: true,
+    quantity: undefined as any,
+  });
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     onSubmit(form);
-    setForm({ name: '', description: '', price: 0, image: '', inStock: true, quantity: 0 });
+    setForm({
+      name: "",
+      description: "",
+      price: undefined as any,
+      inStock: true,
+      quantity: undefined as any,
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="bg-gray-50 p-6 rounded-lg space-y-4"
+    >
       <h3 className="text-lg font-semibold">Add New Item</h3>
-      <input type="text" placeholder="Name" value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="w-full px-3 py-2 border rounded" required />
-      <textarea placeholder="Description" value={form.description} onChange={e => setForm({...form, description: e.target.value})} className="w-full px-3 py-2 border rounded" />
-      <input type="number" placeholder="Price" value={form.price} onChange={e => setForm({...form, price: parseFloat(e.target.value)})} className="w-full px-3 py-2 border rounded" required min="0" step="0.01" />
-      <input type="url" placeholder="Image URL" value={form.image} onChange={e => setForm({...form, image: e.target.value})} className="w-full px-3 py-2 border rounded" />
-      <input type="number" placeholder="Quantity" value={form.quantity} onChange={e => setForm({...form, quantity: parseInt(e.target.value)})} className="w-full px-3 py-2 border rounded" min="0" />
+      <input
+        type="text"
+        placeholder="Name"
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        className="w-full px-3 py-2 border rounded"
+        required
+      />
+      <textarea
+        placeholder="Description"
+        value={form.description}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
+        className="w-full px-3 py-2 border rounded"
+      />
+      <input
+        type="number"
+        placeholder="Price"
+        value={form.price || ""}
+        onChange={(e) =>
+          setForm({ ...form, price: parseFloat(e.target.value) || 0 })
+        }
+        className="w-full px-3 py-2 border rounded"
+        required
+        min="0"
+        step="0.01"
+      />
+      <input
+        type="number"
+        placeholder="Quantity"
+        value={form.quantity || ""}
+        onChange={(e) =>
+          setForm({ ...form, quantity: parseInt(e.target.value) || 0 })
+        }
+        className="w-full px-3 py-2 border rounded"
+        min="0"
+      />
       <label className="flex items-center gap-2">
-        <input type="checkbox" checked={form.inStock} onChange={e => setForm({...form, inStock: e.target.checked})} /> In Stock
+        <input
+          type="checkbox"
+          checked={form.inStock}
+          onChange={(e) => setForm({ ...form, inStock: e.target.checked })}
+        />{" "}
+        In Stock
       </label>
-      <button type="submit" disabled={isLoading} className="w-full px-4 py-2 bg-blue-500 text-white rounded disabled:bg-blue-300">
-        {isLoading ? 'Adding...' : 'Add Item'}
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="w-full px-4 py-2 bg-blue-500 text-white rounded disabled:bg-blue-300"
+      >
+        {isLoading ? "Adding..." : "Add Item"}
       </button>
     </form>
   );
@@ -243,14 +354,15 @@ export function AddItemForm({ onSubmit, isLoading }: any) {
 ```
 
 ### hooks.ts
-```typescript
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-const API_BASE = '/api/fruits/{yourfruit}'; // lowercase
+```typescript
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
+const API_BASE = "/api/fruits/{yourfruit}"; // lowercase
 
 export function useItems() {
   return useQuery({
-    queryKey: ['{yourfruit}', 'items'],
+    queryKey: ["{yourfruit}", "items"],
     queryFn: async () => {
       const res = await fetch(API_BASE);
       const json = await res.json();
@@ -265,15 +377,16 @@ export function useCreateItem() {
   return useMutation({
     mutationFn: async (data: any) => {
       const res = await fetch(API_BASE, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       const json = await res.json();
       if (!json.success) throw new Error(json.error);
       return json.data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['{yourfruit}', 'items'] }),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: ["{yourfruit}", "items"] }),
   });
 }
 
@@ -281,19 +394,42 @@ export function useDeleteItem() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_BASE}/${id}`, { method: "DELETE" });
       const json = await res.json();
       if (!json.success) throw new Error(json.error);
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['{yourfruit}', 'items'] }),
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: ["{yourfruit}", "items"] }),
   });
 }
 ```
 
+### secret.txt
+
+**CRITICAL**: Create a file named `secret.txt` in your module directory containing ONLY the name of the coding agent that created this module.
+
+The value MUST be exactly one of these:
+- `Cursor`
+- `GitHub Copilot`
+- `Claude Code`
+- `Roo Code`
+- `Cline`
+- `Antigravity`
+- `Codex CLI`
+
+Example file content:
+```
+Claude Code
+```
+
+This file is used for the blind evaluation - it reveals which agent created the module during the presentation.
+
 ## Requirements
 
 ### Must Complete
-- [ ] All 6 files created
+
+- [ ] All 6 module files created (config.ts, schema.ts, model.ts, api.ts, components.tsx, hooks.ts)
+- [ ] secret.txt file created with exact agent name
 - [ ] CRUD operations work
 - [ ] Validation returns 400 for invalid data
 - [ ] Invalid ObjectId returns 400 (not 500)
@@ -301,11 +437,13 @@ export function useDeleteItem() {
 - [ ] Empty state handled
 
 ### Tool Usage Tasks
+
 - [ ] Find all files containing 'mongoose' - add comment in model.ts
 - [ ] Find MongoDB connection config - add comment in model.ts
 - [ ] Implement seedFromApi() function
 
 ### Verification
+
 ```bash
 npm run build  # Must pass
 ```

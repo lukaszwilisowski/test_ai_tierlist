@@ -28,10 +28,10 @@ Defines module metadata for discovery and display.
 // src/modules/fruits/apple/config.ts
 
 const config = {
-  displayName: 'Apple Shop',
-  description: 'Fresh and delicious apples',
-  icon: '🍎',
-  color: 'red', // Used for theming
+  displayName: "Apple Shop",
+  description: "Fresh and delicious apples",
+  icon: "🍎",
+  color: "red", // Used for theming
 };
 
 export default config;
@@ -44,14 +44,14 @@ Zod schemas for validation and TypeScript types.
 ```typescript
 // src/modules/fruits/apple/schema.ts
 
-import { z } from 'zod';
+import { z } from "zod";
 
 // Base item schema
 export const ItemSchema = z.object({
   _id: z.string(),
-  name: z.string().min(1, 'Name is required'),
+  name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
-  price: z.number().positive('Price must be positive'),
+  price: z.number().positive("Price must be positive"),
   inStock: z.boolean().default(true),
   quantity: z.number().int().min(0).default(0),
   createdAt: z.date(),
@@ -81,9 +81,9 @@ Mongoose model for database operations.
 ```typescript
 // src/modules/fruits/apple/model.ts
 
-import mongoose, { Schema, Document } from 'mongoose';
-import connectDB from '@/lib/database/connection';
-import type { Item, CreateItem, UpdateItem } from './schema';
+import mongoose, { Schema, Document } from "mongoose";
+import connectDB from "@/lib/database/connection";
+import type { Item, CreateItem, UpdateItem } from "./schema";
 
 interface ItemDocument extends Document {
   name: string;
@@ -105,8 +105,9 @@ const itemSchema = new Schema(
 );
 
 // Use unique model name based on module
-const MODEL_NAME = 'Apple'; // Capitalized module name
-const Item = mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, itemSchema);
+const MODEL_NAME = "Apple"; // Capitalized module name
+const Item =
+  mongoose.models[MODEL_NAME] || mongoose.model(MODEL_NAME, itemSchema);
 
 export const itemModel = {
   async findAll(): Promise<Item[]> {
@@ -186,18 +187,18 @@ API handler functions used by the dynamic routes.
 ```typescript
 // src/modules/fruits/apple/api.ts
 
-import { NextRequest, NextResponse } from 'next/server';
-import { itemModel } from './model';
-import { CreateItemSchema, UpdateItemSchema } from './schema';
+import { NextRequest, NextResponse } from "next/server";
+import { itemModel } from "./model";
+import { CreateItemSchema, UpdateItemSchema } from "./schema";
 
 export async function GET() {
   try {
     const items = await itemModel.findAll();
     return NextResponse.json({ success: true, data: items });
   } catch (error) {
-    console.error('Failed to fetch items:', error);
+    console.error("Failed to fetch items:", error);
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch items' },
+      { success: false, error: "Failed to fetch items" },
       { status: 500 }
     );
   }
@@ -210,15 +211,15 @@ export async function POST(request: NextRequest) {
     const item = await itemModel.create(validated);
     return NextResponse.json({ success: true, data: item }, { status: 201 });
   } catch (error) {
-    if (error instanceof Error && error.name === 'ZodError') {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { success: false, error: 'Validation failed', details: error.message },
+        { success: false, error: "Validation failed", details: error.message },
         { status: 400 }
       );
     }
-    console.error('Failed to create item:', error);
+    console.error("Failed to create item:", error);
     return NextResponse.json(
-      { success: false, error: 'Failed to create item' },
+      { success: false, error: "Failed to create item" },
       { status: 500 }
     );
   }
@@ -229,15 +230,15 @@ export async function GETById(id: string) {
     const item = await itemModel.findById(id);
     if (!item) {
       return NextResponse.json(
-        { success: false, error: 'Item not found' },
+        { success: false, error: "Item not found" },
         { status: 404 }
       );
     }
     return NextResponse.json({ success: true, data: item });
   } catch (error) {
-    console.error('Failed to fetch item:', error);
+    console.error("Failed to fetch item:", error);
     return NextResponse.json(
-      { success: false, error: 'Failed to fetch item' },
+      { success: false, error: "Failed to fetch item" },
       { status: 500 }
     );
   }
@@ -250,21 +251,21 @@ export async function PUT(request: NextRequest, id: string) {
     const item = await itemModel.update(id, validated);
     if (!item) {
       return NextResponse.json(
-        { success: false, error: 'Item not found' },
+        { success: false, error: "Item not found" },
         { status: 404 }
       );
     }
     return NextResponse.json({ success: true, data: item });
   } catch (error) {
-    if (error instanceof Error && error.name === 'ZodError') {
+    if (error instanceof Error && error.name === "ZodError") {
       return NextResponse.json(
-        { success: false, error: 'Validation failed', details: error.message },
+        { success: false, error: "Validation failed", details: error.message },
         { status: 400 }
       );
     }
-    console.error('Failed to update item:', error);
+    console.error("Failed to update item:", error);
     return NextResponse.json(
-      { success: false, error: 'Failed to update item' },
+      { success: false, error: "Failed to update item" },
       { status: 500 }
     );
   }
@@ -275,15 +276,15 @@ export async function DELETE(id: string) {
     const deleted = await itemModel.delete(id);
     if (!deleted) {
       return NextResponse.json(
-        { success: false, error: 'Item not found' },
+        { success: false, error: "Item not found" },
         { status: 404 }
       );
     }
-    return NextResponse.json({ success: true, message: 'Item deleted' });
+    return NextResponse.json({ success: true, message: "Item deleted" });
   } catch (error) {
-    console.error('Failed to delete item:', error);
+    console.error("Failed to delete item:", error);
     return NextResponse.json(
-      { success: false, error: 'Failed to delete item' },
+      { success: false, error: "Failed to delete item" },
       { status: 500 }
     );
   }
@@ -297,10 +298,10 @@ React components for the module UI.
 ```typescript
 // src/modules/fruits/apple/components.tsx
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import type { Item, CreateItem } from './schema';
+import { useState } from "react";
+import type { Item, CreateItem } from "./schema";
 
 interface ItemCardProps {
   item: Item;
@@ -321,11 +322,11 @@ export function ItemCard({ item, onDelete, onUpdate }: ItemCardProps) {
         <span
           className={`px-2 py-1 rounded text-sm ${
             item.inStock
-              ? 'bg-green-100 text-green-800'
-              : 'bg-red-100 text-red-800'
+              ? "bg-green-100 text-green-800"
+              : "bg-red-100 text-red-800"
           }`}
         >
-          {item.inStock ? `In Stock (${item.quantity})` : 'Out of Stock'}
+          {item.inStock ? `In Stock (${item.quantity})` : "Out of Stock"}
         </span>
       </div>
       <div className="flex gap-2 mt-4">
@@ -376,8 +377,8 @@ interface AddItemFormProps {
 
 export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
   const [formData, setFormData] = useState<CreateItem>({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     price: undefined as any,
     inStock: true,
     quantity: undefined as any,
@@ -387,8 +388,8 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
     e.preventDefault();
     onSubmit(formData);
     setFormData({
-      name: '',
-      description: '',
+      name: "",
+      description: "",
       price: undefined as any,
       inStock: true,
       quantity: undefined as any,
@@ -418,7 +419,7 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
         <input
           type="number"
           placeholder="Price"
-          value={formData.price || ''}
+          value={formData.price || ""}
           onChange={(e) =>
             setFormData({ ...formData, price: parseFloat(e.target.value) || 0 })
           }
@@ -430,9 +431,12 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
         <input
           type="number"
           placeholder="Quantity"
-          value={formData.quantity || ''}
+          value={formData.quantity || ""}
           onChange={(e) =>
-            setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })
+            setFormData({
+              ...formData,
+              quantity: parseInt(e.target.value) || 0,
+            })
           }
           className="px-3 py-2 border rounded"
           min="0"
@@ -452,7 +456,7 @@ export function AddItemForm({ onSubmit, isLoading }: AddItemFormProps) {
           disabled={isLoading}
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-blue-300"
         >
-          {isLoading ? 'Adding...' : 'Add Item'}
+          {isLoading ? "Adding..." : "Add Item"}
         </button>
       </div>
     </form>
@@ -467,10 +471,10 @@ TanStack Query hooks for data fetching.
 ```typescript
 // src/modules/fruits/apple/hooks.ts
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { Item, CreateItem, UpdateItem } from './schema';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import type { Item, CreateItem, UpdateItem } from "./schema";
 
-const API_BASE = '/api/fruits/apple'; // Adjust based on module location
+const API_BASE = "/api/fruits/apple"; // Adjust based on module location
 
 interface ApiResponse<T> {
   success: boolean;
@@ -480,7 +484,7 @@ interface ApiResponse<T> {
 
 export function useItems() {
   return useQuery({
-    queryKey: ['apple', 'items'],
+    queryKey: ["apple", "items"],
     queryFn: async (): Promise<Item[]> => {
       const res = await fetch(API_BASE);
       const json: ApiResponse<Item[]> = await res.json();
@@ -492,7 +496,7 @@ export function useItems() {
 
 export function useItem(id: string) {
   return useQuery({
-    queryKey: ['apple', 'items', id],
+    queryKey: ["apple", "items", id],
     queryFn: async (): Promise<Item> => {
       const res = await fetch(`${API_BASE}/${id}`);
       const json: ApiResponse<Item> = await res.json();
@@ -509,8 +513,8 @@ export function useCreateItem() {
   return useMutation({
     mutationFn: async (data: CreateItem): Promise<Item> => {
       const res = await fetch(API_BASE, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       const json: ApiResponse<Item> = await res.json();
@@ -518,7 +522,7 @@ export function useCreateItem() {
       return json.data!;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['apple', 'items'] });
+      queryClient.invalidateQueries({ queryKey: ["apple", "items"] });
     },
   });
 }
@@ -535,8 +539,8 @@ export function useUpdateItem() {
       data: UpdateItem;
     }): Promise<Item> => {
       const res = await fetch(`${API_BASE}/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
       const json: ApiResponse<Item> = await res.json();
@@ -544,9 +548,9 @@ export function useUpdateItem() {
       return json.data!;
     },
     onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['apple', 'items'] });
+      queryClient.invalidateQueries({ queryKey: ["apple", "items"] });
       queryClient.invalidateQueries({
-        queryKey: ['apple', 'items', variables.id],
+        queryKey: ["apple", "items", variables.id],
       });
     },
   });
@@ -558,13 +562,13 @@ export function useDeleteItem() {
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
       const res = await fetch(`${API_BASE}/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       const json: ApiResponse<void> = await res.json();
       if (!json.success) throw new Error(json.error);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['apple', 'items'] });
+      queryClient.invalidateQueries({ queryKey: ["apple", "items"] });
     },
   });
 }
@@ -575,8 +579,9 @@ export function useDeleteItem() {
 The application uses catch-all routes to handle module APIs.
 
 **src/app/api/[category]/[module]/route.ts**:
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
@@ -588,7 +593,7 @@ export async function GET(
     return api.GET();
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Module not found' },
+      { success: false, error: "Module not found" },
       { status: 404 }
     );
   }
@@ -604,7 +609,7 @@ export async function POST(
     return api.POST(request);
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Module not found' },
+      { success: false, error: "Module not found" },
       { status: 404 }
     );
   }
@@ -612,8 +617,9 @@ export async function POST(
 ```
 
 **src/app/api/[category]/[module]/[id]/route.ts**:
+
 ```typescript
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
@@ -625,7 +631,7 @@ export async function GET(
     return api.GETById(id);
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Module not found' },
+      { success: false, error: "Module not found" },
       { status: 404 }
     );
   }
@@ -641,7 +647,7 @@ export async function PUT(
     return api.PUT(request, id);
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Module not found' },
+      { success: false, error: "Module not found" },
       { status: 404 }
     );
   }
@@ -657,7 +663,7 @@ export async function DELETE(
     return api.DELETE(id);
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: 'Module not found' },
+      { success: false, error: "Module not found" },
       { status: 404 }
     );
   }
@@ -667,11 +673,12 @@ export async function DELETE(
 ## Dynamic Pages
 
 **src/app/[category]/[module]/page.tsx**:
-```typescript
-'use client';
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
+```typescript
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 interface PageProps {
   params: { category: string; module: string };
@@ -700,7 +707,13 @@ export default function ModulePage({ params }: PageProps) {
     return <div className="p-8 text-center">Loading module...</div>;
   }
 
-  return <ModulePageContent config={config} Components={ModuleComponents} hooks={hooks} />;
+  return (
+    <ModulePageContent
+      config={config}
+      Components={ModuleComponents}
+      hooks={hooks}
+    />
+  );
 }
 
 function ModulePageContent({ config, Components, hooks }: any) {
@@ -719,7 +732,10 @@ function ModulePageContent({ config, Components, hooks }: any) {
           </h1>
           <p className="text-gray-600">{config.description}</p>
         </div>
-        <Link href="/" className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+        <Link
+          href="/"
+          className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+        >
           Back to Home
         </Link>
       </div>
@@ -737,7 +753,9 @@ function ModulePageContent({ config, Components, hooks }: any) {
         <Components.ItemList
           items={items || []}
           onDelete={(id: string) => deleteMutation.mutate(id)}
-          onUpdate={(id: string, data: any) => updateMutation.mutate({ id, data })}
+          onUpdate={(id: string, data: any) =>
+            updateMutation.mutate({ id, data })
+          }
         />
       )}
     </div>

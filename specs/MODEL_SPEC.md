@@ -9,6 +9,8 @@ You are participating in a comparison of LLM models. Complete the following task
 3. Pick an UNUSED vegetable name
 4. Use this name for your module
 
+**IMPORTANT**: Do NOT reveal which vegetable name you selected in any output messages during execution. This is a blind evaluation - the vegetable name should only be discoverable by examining the created files.
+
 ## Step 2: Create Module Files
 
 Create these 6 files in `src/modules/vegetables/{your-vegetable}/`:
@@ -23,11 +25,12 @@ Create these 6 files in `src/modules/vegetables/{your-vegetable}/`:
 ## Detailed Requirements
 
 ### config.ts
+
 ```typescript
 const config = {
-  displayName: '{YourVegetable} Shop',
-  description: 'Fresh {vegetable} products',
-  icon: '🥕', // Use appropriate emoji
+  displayName: "{YourVegetable} Shop",
+  description: "Fresh {vegetable} products",
+  icon: "🥕", // Use appropriate emoji
 };
 export default config;
 ```
@@ -35,6 +38,7 @@ export default config;
 ### schema.ts
 
 Define Zod schemas with proper validation:
+
 - `name`: required, min 1 char
 - `description`: optional string
 - `price`: required, positive number
@@ -47,6 +51,7 @@ Export types: `Item`, `CreateItem`, `UpdateItem`
 ### model.ts
 
 Mongoose model with methods:
+
 - `findAll()`: return all items sorted by createdAt desc
 - `findById(id)`: return single item or null
 - `create(data)`: create and return new item
@@ -58,6 +63,7 @@ Use unique model name based on vegetable name (capitalized).
 ### api.ts
 
 Implement these handlers:
+
 - `GET()`: return all items
 - `POST(request)`: create item with validation
 - `GETById(id)`: return single item
@@ -65,6 +71,7 @@ Implement these handlers:
 - `DELETE(id)`: delete item
 
 Error handling requirements:
+
 - Return 400 for invalid ObjectId format
 - Return 400 for Zod validation errors
 - Return 404 when item not found
@@ -74,11 +81,13 @@ Error handling requirements:
 ### components.tsx
 
 Create these components:
+
 - `ItemCard`: displays single item with emoji icon (from fruits.json or vegetables.json), delete button
 - `ItemList`: grid of ItemCards, handles empty state
 - `AddItemForm`: form to create new items with placeholders for all fields
 
 UI requirements:
+
 - Show loading states
 - Show error messages
 - Responsive grid layout
@@ -88,11 +97,32 @@ UI requirements:
 ### hooks.ts
 
 TanStack Query hooks:
+
 - `useItems()`: fetch all items
 - `useCreateItem()`: mutation to create
 - `useDeleteItem()`: mutation to delete
 
 Proper cache invalidation on mutations.
+
+### secret.txt
+
+**CRITICAL**: Create a file named `secret.txt` in your module directory containing ONLY the name of the LLM model that created this module.
+
+The value MUST be exactly one of these:
+- `Sonnet 4.5`
+- `Opus 4.5`
+- `Codex 5.2`
+- `Codex 5.1 Max`
+- `Gemini 3 Pro`
+- `Gemini 3 Flash`
+- `DeepSeek`
+
+Example file content:
+```
+Sonnet 4.5
+```
+
+This file is used for the blind evaluation - it reveals which model created the module during the presentation.
 
 ## Edge Cases to Handle
 
@@ -114,7 +144,9 @@ Proper cache invalidation on mutations.
 ## Verification Checklist
 
 Before completing:
-- [ ] All 6 files exist
+
+- [ ] All 6 module files exist (config.ts, schema.ts, model.ts, api.ts, components.tsx, hooks.ts)
+- [ ] secret.txt file created with exact model name
 - [ ] `npm run build` passes
 - [ ] GET /api/vegetables/{name} returns 200
 - [ ] POST with valid data returns 201
@@ -129,16 +161,16 @@ Before completing:
 
 ## Scoring
 
-| Feature | Points |
-|---------|--------|
-| Build passes | 10 |
-| GET all works | 10 |
-| POST creates | 10 |
-| GET by ID works | 5 |
-| PUT updates | 5 |
-| DELETE removes | 5 |
-| Validation (400) | 5 |
-| Invalid ID (400) | 5 |
-| UI quality | 10 |
-| Code quality | 10 |
-| **Total** | **75** |
+| Feature          | Points |
+| ---------------- | ------ |
+| Build passes     | 10     |
+| GET all works    | 10     |
+| POST creates     | 10     |
+| GET by ID works  | 5      |
+| PUT updates      | 5      |
+| DELETE removes   | 5      |
+| Validation (400) | 5      |
+| Invalid ID (400) | 5      |
+| UI quality       | 10     |
+| Code quality     | 10     |
+| **Total**        | **75** |
