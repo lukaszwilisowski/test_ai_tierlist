@@ -34,11 +34,11 @@
     },
     {
       "agent": "Antigravity",
-      "durationMinutes": 0,
-      "durationSeconds": 0,
-      "timeDisplay": "00:00",
+      "durationMinutes": 4,
+      "durationSeconds": 8,
+      "timeDisplay": "04:08",
       "canRunCLI": false,
-      "note": "CLI doesn't work, manual testing only"
+      "note": "Manual testing - Build: PASS"
     },
     {
       "agent": "Codex CLI",
