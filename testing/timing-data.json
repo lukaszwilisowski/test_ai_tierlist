@@ -55,6 +55,14 @@
       "timeDisplay": "03:48",
       "canRunCLI": false,
       "note": "Manual testing - Build: PASS"
+    },
+    {
+      "agent": "Roo",
+      "durationMinutes": 3,
+      "durationSeconds": 3,
+      "timeDisplay": "03:03",
+      "canRunCLI": false,
+      "note": "Manual testing - Build: PASS"
     }
   ],
   "models": [
