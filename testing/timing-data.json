@@ -47,6 +47,14 @@
       "timeDisplay": "00:00",
       "canRunCLI": true,
       "note": "Via codex CLI"
+    },
+    {
+      "agent": "Cline Code",
+      "durationMinutes": 3,
+      "durationSeconds": 48,
+      "timeDisplay": "03:48",
+      "canRunCLI": false,
+      "note": "Manual testing - Build: PASS"
     }
   ],
   "models": [
