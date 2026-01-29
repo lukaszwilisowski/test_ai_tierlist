@@ -42,11 +42,11 @@
     },
     {
       "agent": "Codex CLI",
-      "durationMinutes": 0,
-      "durationSeconds": 1,
-      "timeDisplay": "00:01",
-      "canRunCLI": true,
-      "note": "Via codex CLI"
+      "durationMinutes": 33,
+      "durationSeconds": 21,
+      "timeDisplay": "33:21",
+      "canRunCLI": false,
+      "note": "Manual testing - Build: PASS"
     },
     {
       "agent": "Cline Code",
