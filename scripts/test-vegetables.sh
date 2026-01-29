@@ -192,7 +192,7 @@ CRITICAL REQUIREMENTS:
 
     # Add and commit
     git add "$MODULE_PATH/"
-    git add "$SECRET_PATH"
+    git add -f "$SECRET_PATH"
     git add "$OUTPUT_FILE"
     git commit -m "Implement $VEGETABLE module (Model: $MODEL_NAME)
 
