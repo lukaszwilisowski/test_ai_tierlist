@@ -10,9 +10,9 @@
     },
     {
       "agent": "Claude Code",
-      "durationMinutes": 0,
-      "durationSeconds": 0,
-      "timeDisplay": "00:00",
+      "durationMinutes": 3,
+      "durationSeconds": 19,
+      "timeDisplay": "03:19",
       "canRunCLI": true,
       "note": "Via claude CLI"
     },
