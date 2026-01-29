@@ -4,23 +4,23 @@
     "emoji": "🍓"
   },
   "Claude Code": {
-    "fruit": "apple",
-    "emoji": "🍎"
-  },
-  "Roo Code": {
     "fruit": "mango",
     "emoji": "🥭"
   },
-  "Cline": {
-    "fruit": "banana",
-    "emoji": "🍌"
-  },
-  "Antigravity": {
+  "Roo Code": {
     "fruit": "orange",
     "emoji": "🍊"
   },
+  "Cline": {
+    "fruit": "kiwi",
+    "emoji": "🥝"
+  },
+  "Antigravity": {
+    "fruit": "grape",
+    "emoji": "🍇"
+  },
   "Codex CLI": {
-    "fruit": "lemon",
-    "emoji": "🍋"
+    "fruit": "apple",
+    "emoji": "🍎"
   }
 }
