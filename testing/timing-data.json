@@ -61,45 +61,45 @@
     {
       "model": "Sonnet 4.5",
       "agent": "Claude Code",
-      "durationMinutes": 2,
-      "durationSeconds": 36,
-      "timeDisplay": "02:36",
+      "durationMinutes": 1,
+      "durationSeconds": 35,
+      "timeDisplay": "01:35",
       "canRunCLI": true,
       "note": "Via copilot CLI with claude-sonnet-4.5"
     },
     {
       "model": "Opus 4.5",
       "agent": "Claude Code",
-      "durationMinutes": 0,
-      "durationSeconds": 16,
-      "timeDisplay": "00:16",
+      "durationMinutes": 2,
+      "durationSeconds": 4,
+      "timeDisplay": "02:04",
       "canRunCLI": true,
       "note": "Via copilot CLI with claude-opus-4.5"
     },
     {
       "model": "Codex 5.2",
       "agent": "GitHub Copilot",
-      "durationMinutes": 0,
-      "durationSeconds": 12,
-      "timeDisplay": "00:12",
+      "durationMinutes": 7,
+      "durationSeconds": 48,
+      "timeDisplay": "07:48",
       "canRunCLI": true,
       "note": "Via copilot CLI with gpt-5.2-codex"
     },
     {
       "model": "Codex 5.1 Max",
       "agent": "GitHub Copilot",
-      "durationMinutes": 0,
-      "durationSeconds": 21,
-      "timeDisplay": "00:21",
+      "durationMinutes": 3,
+      "durationSeconds": 10,
+      "timeDisplay": "03:10",
       "canRunCLI": true,
       "note": "Via copilot CLI with gpt-5.1-codex-max"
     },
     {
       "model": "Gemini 3 Pro",
       "agent": "GitHub Copilot",
-      "durationMinutes": 0,
-      "durationSeconds": 19,
-      "timeDisplay": "00:19",
+      "durationMinutes": 3,
+      "durationSeconds": 51,
+      "timeDisplay": "03:51",
       "canRunCLI": true,
       "note": "Via copilot CLI with gemini-3-pro-preview"
     }

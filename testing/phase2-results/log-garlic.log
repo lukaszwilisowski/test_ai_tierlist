@@ -1,0 +1,36 @@
+
+> ai-tierlist-shop@0.1.0 build /Users/lukasz.wilisowski/Development/Personal/test_ai_tierlist
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1314.5ms
+  Running TypeScript ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/9) ...
+  Generating static pages using 9 workers (2/9) 
+  Generating static pages using 9 workers (4/9) 
+  Generating static pages using 9 workers (6/9) 
+✓ Generating static pages using 9 workers (9/9) in 85.9ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /[category]/[module]
+├ ƒ /api/[category]/[module]
+├ ƒ /api/[category]/[module]/[id]
+├ ƒ /api/[category]/[module]/seed
+├ ƒ /api/data/agents
+├ ƒ /api/data/models
+├ ƒ /api/data/timing
+├ ƒ /api/modules
+├ ƒ /api/modules/[category]/[name]/secret
+└ ○ /tierlist
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

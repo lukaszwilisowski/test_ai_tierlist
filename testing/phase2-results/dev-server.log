@@ -8,25 +8,165 @@
 - Environments: .env.local, .env
 
 ✓ Starting...
-✓ Ready in 487ms
- GET /fruits/mango 200 in 727ms (compile: 619ms, render: 108ms)
- GET /api/fruits/mango 200 in 720ms (compile: 540ms, render: 180ms)
- POST /api/fruits/mango 201 in 19ms (compile: 4ms, render: 15ms)
- GET /api/fruits/mango/697b40a07b5bc83a8228bc57 200 in 445ms (compile: 438ms, render: 7ms)
- PUT /api/fruits/mango/697b40a07b5bc83a8228bc57 200 in 8ms (compile: 3ms, render: 6ms)
- DELETE /api/fruits/mango/697b40a07b5bc83a8228bc57 200 in 6ms (compile: 1129µs, render: 5ms)
+✓ Ready in 514ms
+ GET /fruits/mango 200 in 729ms (compile: 614ms, render: 114ms)
+ GET /api/fruits/mango 200 in 700ms (compile: 520ms, render: 180ms)
+ POST /api/fruits/mango 201 in 17ms (compile: 3ms, render: 13ms)
+ GET /api/fruits/mango/697b501f2e12ac283c05c722 200 in 453ms (compile: 446ms, render: 7ms)
+ PUT /api/fruits/mango/697b501f2e12ac283c05c722 200 in 9ms (compile: 3ms, render: 6ms)
+ DELETE /api/fruits/mango/697b501f2e12ac283c05c722 200 in 6ms (compile: 1359µs, render: 5ms)
  POST /api/fruits/mango 400 in 5ms (compile: 2ms, render: 3ms)
- POST /api/fruits/mango 400 in 3ms (compile: 965µs, render: 2ms)
- POST /api/fruits/mango 400 in 4ms (compile: 1885µs, render: 2ms)
- GET /api/fruits/mango/invalid-not-objectid 400 in 5ms (compile: 1284µs, render: 3ms)
- GET /fruits/strawberry 200 in 36ms (compile: 3ms, render: 33ms)
- GET /api/fruits/strawberry 200 in 10ms (compile: 1367µs, render: 9ms)
- POST /api/fruits/strawberry 201 in 74ms (compile: 894µs, render: 73ms)
- GET /api/fruits/strawberry/697b40a17b5bc83a8228bc5d 200 in 9ms (compile: 1151µs, render: 8ms)
- PUT /api/fruits/strawberry/697b40a17b5bc83a8228bc5d 200 in 5ms (compile: 1082µs, render: 4ms)
- DELETE /api/fruits/strawberry/697b40a17b5bc83a8228bc5d 200 in 11ms (compile: 896µs, render: 10ms)
- POST /api/fruits/strawberry 400 in 3ms (compile: 811µs, render: 2ms)
- POST /api/fruits/strawberry 400 in 3ms (compile: 948µs, render: 2ms)
- POST /api/fruits/strawberry 400 in 2ms (compile: 749µs, render: 1506µs)
- GET /api/fruits/strawberry/invalid-not-objectid 400 in 2ms (compile: 847µs, render: 1441µs)
+ POST /api/fruits/mango 400 in 3ms (compile: 900µs, render: 2ms)
+ POST /api/fruits/mango 400 in 5ms (compile: 2ms, render: 3ms)
+ GET /api/fruits/mango/invalid-not-objectid 400 in 5ms (compile: 1339µs, render: 4ms)
+ GET /api/fruits/strawberry 200 in 9ms (compile: 1358µs, render: 8ms)
+ GET /fruits/strawberry 200 in 38ms (compile: 3ms, render: 34ms)
+ POST /api/fruits/strawberry 201 in 7ms (compile: 986µs, render: 6ms)
+ GET /api/fruits/strawberry/697b501f2e12ac283c05c728 200 in 5ms (compile: 926µs, render: 4ms)
+ PUT /api/fruits/strawberry/697b501f2e12ac283c05c728 200 in 5ms (compile: 834µs, render: 5ms)
+ DELETE /api/fruits/strawberry/697b501f2e12ac283c05c728 200 in 4ms (compile: 891µs, render: 3ms)
+ POST /api/fruits/strawberry 400 in 3ms (compile: 795µs, render: 1727µs)
+ POST /api/fruits/strawberry 400 in 3ms (compile: 833µs, render: 2ms)
+ POST /api/fruits/strawberry 400 in 3ms (compile: 794µs, render: 2ms)
+ GET /api/fruits/strawberry/invalid-not-objectid 400 in 2ms (compile: 931µs, render: 1435µs)
+ GET /vegetables/broccoli 200 in 40ms (compile: 1233µs, render: 39ms)
+ GET /api/vegetables/broccoli 200 in 22ms (compile: 962µs, render: 21ms)
+ POST /api/vegetables/broccoli 201 in 72ms (compile: 903µs, render: 71ms)
+ GET /api/vegetables/broccoli/697b501f2e12ac283c05c72e 200 in 4ms (compile: 992µs, render: 3ms)
+ PUT /api/vegetables/broccoli/697b501f2e12ac283c05c72e 200 in 6ms (compile: 742µs, render: 5ms)
+ DELETE /api/vegetables/broccoli/697b501f2e12ac283c05c72e 200 in 4ms (compile: 817µs, render: 4ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/broccoli/api.ts:30:46)
+  28 |     if (error.name === "ZodError") {
+  29 |       return NextResponse.json(
+> 30 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  31 |         { status: 400 }
+  32 |       );
+  33 |     }
+ POST /api/vegetables/broccoli 500 in 86ms (compile: 691µs, render: 86ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/broccoli/api.ts:30:46)
+  28 |     if (error.name === "ZodError") {
+  29 |       return NextResponse.json(
+> 30 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  31 |         { status: 400 }
+  32 |       );
+  33 |     }
+ POST /api/vegetables/broccoli 500 in 45ms (compile: 958µs, render: 44ms)
+ POST /api/vegetables/broccoli 201 in 5ms (compile: 1284µs, render: 3ms)
+ GET /api/vegetables/broccoli/invalid-not-objectid 400 in 4ms (compile: 2ms, render: 1471µs)
+ GET /vegetables/eggplant 200 in 27ms (compile: 3ms, render: 24ms)
+ GET /api/vegetables/eggplant 200 in 10ms (compile: 2ms, render: 8ms)
+ POST /api/vegetables/eggplant 201 in 62ms (compile: 958µs, render: 61ms)
+ GET /api/vegetables/eggplant/697b501f2e12ac283c05c736 200 in 4ms (compile: 995µs, render: 3ms)
+ PUT /api/vegetables/eggplant/697b501f2e12ac283c05c736 200 in 11ms (compile: 1203µs, render: 10ms)
+ DELETE /api/vegetables/eggplant/697b501f2e12ac283c05c736 200 in 4ms (compile: 962µs, render: 3ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/eggplant/api.ts:30:46)
+  28 |     if (error.name === "ZodError") {
+  29 |       return NextResponse.json(
+> 30 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  31 |         { status: 400 }
+  32 |       );
+  33 |     }
+ POST /api/vegetables/eggplant 500 in 42ms (compile: 939µs, render: 41ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/eggplant/api.ts:30:46)
+  28 |     if (error.name === "ZodError") {
+  29 |       return NextResponse.json(
+> 30 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  31 |         { status: 400 }
+  32 |       );
+  33 |     }
+ POST /api/vegetables/eggplant 500 in 41ms (compile: 978µs, render: 40ms)
+ POST /api/vegetables/eggplant 201 in 4ms (compile: 895µs, render: 4ms)
+ GET /api/vegetables/eggplant/invalid-not-objectid 400 in 2ms (compile: 794µs, render: 1329µs)
+ GET /vegetables/garlic 200 in 27ms (compile: 2ms, render: 24ms)
+ GET /api/vegetables/garlic 200 in 7ms (compile: 940µs, render: 6ms)
+ POST /api/vegetables/garlic 201 in 5ms (compile: 841µs, render: 4ms)
+ GET /api/vegetables/garlic/697b50202e12ac283c05c73e 200 in 3ms (compile: 771µs, render: 3ms)
+ PUT /api/vegetables/garlic/697b50202e12ac283c05c73e 200 in 5ms (compile: 946µs, render: 4ms)
+ DELETE /api/vegetables/garlic/697b50202e12ac283c05c73e 200 in 3ms (compile: 837µs, render: 2ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/garlic/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/garlic 500 in 40ms (compile: 980µs, render: 39ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/garlic/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/garlic 500 in 40ms (compile: 979µs, render: 39ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/garlic/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/garlic 500 in 41ms (compile: 1041µs, render: 40ms)
+ GET /api/vegetables/garlic/invalid-not-objectid 400 in 3ms (compile: 1115µs, render: 1551µs)
+ GET /vegetables/jalapeno 200 in 27ms (compile: 1585µs, render: 26ms)
+ GET /api/vegetables/jalapeno 200 in 7ms (compile: 948µs, render: 6ms)
+ POST /api/vegetables/jalapeno 201 in 67ms (compile: 2ms, render: 65ms)
+ GET /api/vegetables/jalapeno/697b50202e12ac283c05c744 200 in 5ms (compile: 2ms, render: 3ms)
+ PUT /api/vegetables/jalapeno/697b50202e12ac283c05c744 200 in 7ms (compile: 836µs, render: 6ms)
+ DELETE /api/vegetables/jalapeno/697b50202e12ac283c05c744 200 in 3ms (compile: 791µs, render: 3ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/jalapeno/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/jalapeno 500 in 44ms (compile: 723µs, render: 43ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/jalapeno/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/jalapeno 500 in 45ms (compile: 1153µs, render: 44ms)
+⨯ TypeError: Cannot read properties of undefined (reading '0')
+    at Module.POST (src/modules/vegetables/jalapeno/api.ts:27:46)
+  25 |     if (error.name === "ZodError") {
+  26 |       return NextResponse.json(
+> 27 |         { success: false, error: error.errors[0]?.message || "Validation failed" },
+     |                                              ^
+  28 |         { status: 400 }
+  29 |       );
+  30 |     }
+ POST /api/vegetables/jalapeno 500 in 40ms (compile: 994µs, render: 39ms)
+ GET /api/vegetables/jalapeno/invalid-not-objectid 400 in 3ms (compile: 1026µs, render: 1890µs)
+ GET /vegetables/spinach 200 in 23ms (compile: 2ms, render: 20ms)
+ GET /api/vegetables/spinach 200 in 5ms (compile: 804µs, render: 4ms)
+ POST /api/vegetables/spinach 201 in 68ms (compile: 893µs, render: 67ms)
+ GET /api/vegetables/spinach/697b50202e12ac283c05c74a 200 in 4ms (compile: 944µs, render: 3ms)
+ PUT /api/vegetables/spinach/697b50202e12ac283c05c74a 200 in 5ms (compile: 916µs, render: 4ms)
+ DELETE /api/vegetables/spinach/697b50202e12ac283c05c74a 200 in 4ms (compile: 908µs, render: 3ms)
+ POST /api/vegetables/spinach 400 in 2ms (compile: 916µs, render: 1552µs)
+ POST /api/vegetables/spinach 400 in 2ms (compile: 786µs, render: 1582µs)
+ POST /api/vegetables/spinach 400 in 2ms (compile: 751µs, render: 1526µs)
+ GET /api/vegetables/spinach/invalid-not-objectid 400 in 4ms (compile: 790µs, render: 4ms)
 [?25h
