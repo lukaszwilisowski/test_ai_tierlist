@@ -18,11 +18,11 @@
     },
     {
       "agent": "Roo Code",
-      "durationMinutes": 0,
-      "durationSeconds": 0,
-      "timeDisplay": "00:00",
+      "durationMinutes": 2,
+      "durationSeconds": 15,
+      "timeDisplay": "02:15",
       "canRunCLI": false,
-      "note": "Manual testing only"
+      "note": "Manual testing - Build: PASS"
     },
     {
       "agent": "Cline",
