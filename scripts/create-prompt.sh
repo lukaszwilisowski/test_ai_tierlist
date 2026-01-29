@@ -23,10 +23,10 @@ cat > /tmp/agent-prompt.txt << EOF
 You are implementing a module for a fruit in this project.
 
 DISCOVERY PHASE (REQUIRED):
-1. Read data/fruits.json to see all available fruits
-2. Check src/modules/fruits/ to see which fruits are already implemented
-3. Pick an UNUSED fruit from the JSON file
-4. Read specs/CODING_AGENT_SPEC.md for full requirements
+1. Read scripts/fruit-assignment.json to find YOUR assigned fruit
+2. Your fruit is already assigned - implement ONLY that specific fruit
+3. Read specs/CODING_AGENT_SPEC.md for full requirements
+4. DO NOT pick a different fruit - use your pre-assigned one
 
 IMPORTANT RULES:
 - Use the fruit name (lowercase) as your module name
