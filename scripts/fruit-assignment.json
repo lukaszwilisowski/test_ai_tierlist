@@ -1,0 +1,26 @@
+{
+  "GitHub Copilot": {
+    "fruit": "strawberry",
+    "emoji": "🍓"
+  },
+  "Claude Code": {
+    "fruit": "mango",
+    "emoji": "🥭"
+  },
+  "Roo Code": {
+    "fruit": "apple",
+    "emoji": "🍎"
+  },
+  "Cline": {
+    "fruit": "banana",
+    "emoji": "🍌"
+  },
+  "Antigravity": {
+    "fruit": "lemon",
+    "emoji": "🍋"
+  },
+  "Codex CLI": {
+    "fruit": "watermelon",
+    "emoji": "🍉"
+  }
+}
