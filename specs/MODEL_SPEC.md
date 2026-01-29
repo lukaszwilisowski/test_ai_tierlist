@@ -4,7 +4,7 @@ You are participating in a comparison of LLM models. Complete the following task
 
 ## Purpose
 
-This test evaluates **LLM code generation quality** (correctness, completeness, edge case handling) using the same coding agent. Different models (Sonnet 4.5, Opus 4.5, DeepSeek, etc.) will produce different quality implementations.
+This test evaluates **LLM code generation quality** (correctness, completeness, edge case handling) using the same coding agent. Different models (Sonnet 4.5, Opus 4.5, etc.) will produce different quality implementations.
 
 ---
 

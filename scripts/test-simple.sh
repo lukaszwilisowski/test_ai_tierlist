@@ -76,9 +76,6 @@ while IFS= read -r MODEL_NAME; do
     "Gemini 3 Flash")
       MODEL_ID="gemini-3-flash-preview"
       ;;
-    "DeepSeek")
-      MODEL_ID="deepseek"
-      ;;
     *)
       echo -e "${RED}❌ Unknown model: $MODEL_NAME${NC}"
       continue
