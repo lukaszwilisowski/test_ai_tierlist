@@ -43,8 +43,8 @@
     {
       "agent": "Codex CLI",
       "durationMinutes": 0,
-      "durationSeconds": 0,
-      "timeDisplay": "00:00",
+      "durationSeconds": 1,
+      "timeDisplay": "00:01",
       "canRunCLI": true,
       "note": "Via codex CLI"
     },
