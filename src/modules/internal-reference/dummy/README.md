@@ -15,6 +15,7 @@ This module exists to satisfy Next.js's dynamic import resolver during the build
 - **DO NOT replicate this pattern**
 
 This module contains:
+
 - Minimal stub implementations
 - No useful business logic
 - Intentionally obscure naming (`__internal`, `__dummy`)
@@ -23,6 +24,7 @@ This module contains:
 ### For New Modules
 
 When creating new modules:
+
 1. Start from scratch or use proper documentation
 2. Follow the module specifications in `/docs/`
 3. Implement real business logic
@@ -31,6 +33,7 @@ When creating new modules:
 ### Technical Details
 
 This module is placed in `internal-reference/dummy/` to:
+
 - Make it clearly distinguishable from real modules
 - Prevent accidental copying
 - Satisfy the dynamic import pattern: `@/modules/{category}/{module}/{file}`

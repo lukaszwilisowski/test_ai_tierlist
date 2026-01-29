@@ -1,0 +1,27 @@
+{
+  "Sonnet 4.5": {
+    "vegetable": "garlic",
+    "emoji": "🧄",
+    "agent": "Claude Code"
+  },
+  "Opus 4.5": {
+    "vegetable": "eggplant",
+    "emoji": "🍆",
+    "agent": "Claude Code"
+  },
+  "Codex 5.2": {
+    "vegetable": "onion",
+    "emoji": "🧅",
+    "agent": "GitHub Copilot"
+  },
+  "Codex 5.1 Max": {
+    "vegetable": "carrot",
+    "emoji": "🥕",
+    "agent": "GitHub Copilot"
+  },
+  "Gemini 3 Pro": {
+    "vegetable": "mushroom",
+    "emoji": "🍄",
+    "agent": "GitHub Copilot"
+  }
+}

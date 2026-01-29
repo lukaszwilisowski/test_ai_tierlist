@@ -8,6 +8,7 @@ interface ModuleInfo {
   emoji: string;
   score?: number;
   maxScore?: number;
+  timeDisplay?: string;
 }
 
 export async function GET() {
@@ -43,6 +44,39 @@ export async function GET() {
       console.log('No test results found yet');
     }
 
+    // Load timing data
+    const timingMap = new Map<string, string>();
+    try {
+      const timingPath = path.join(process.cwd(), 'testing/timing-data.json');
+      const timingContent = await fs.readFile(timingPath, 'utf8');
+      const timingData = JSON.parse(timingContent);
+
+      // Map agent names to their timeDisplay
+      for (const agent of timingData.agents) {
+        timingMap.set(agent.agent, agent.timeDisplay || '00:00');
+      }
+
+      // Map model names to their timeDisplay
+      for (const model of timingData.models) {
+        timingMap.set(model.model, model.timeDisplay || '00:00');
+      }
+    } catch (err) {
+      console.log('No timing data found yet');
+    }
+
+    // Helper function to get timing for a module
+    async function getTimingForModule(category: 'fruits' | 'vegetables', moduleName: string): Promise<string | undefined> {
+      try {
+        const secretPath = path.join(process.cwd(), '.secrets', category, `${moduleName}.json`);
+        const secretContent = await fs.readFile(secretPath, 'utf8');
+        const secretData = JSON.parse(secretContent);
+        const secretName = secretData.agent || secretData.model;
+        return timingMap.get(secretName);
+      } catch (err) {
+        return undefined;
+      }
+    }
+
     const modules: ModuleInfo[] = [];
 
     // Scan fruits modules
@@ -53,12 +87,14 @@ export async function GET() {
         const stats = await fs.stat(path.join(fruitsPath, dir));
         if (stats.isDirectory()) {
           const scoreData = scoresMap.get(dir);
+          const timeDisplay = await getTimingForModule('fruits', dir);
           modules.push({
             name: dir,
             category: 'fruits',
             emoji: fruitsMap.get(dir) || '🍎',
             score: scoreData?.score,
             maxScore: scoreData?.maxScore,
+            timeDisplay,
           });
         }
       }
@@ -74,12 +110,14 @@ export async function GET() {
         const stats = await fs.stat(path.join(vegetablesPath, dir));
         if (stats.isDirectory()) {
           const scoreData = scoresMap.get(dir);
+          const timeDisplay = await getTimingForModule('vegetables', dir);
           modules.push({
             name: dir,
             category: 'vegetables',
             emoji: vegetablesMap.get(dir) || '🥕',
             score: scoreData?.score,
             maxScore: scoreData?.maxScore,
+            timeDisplay,
           });
         }
       }

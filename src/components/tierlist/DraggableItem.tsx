@@ -15,6 +15,7 @@ interface DraggableItemProps {
   revealedTextColor?: string;
   score?: number;
   maxScore?: number;
+  timeDisplay?: string;
   onDoubleClick: () => void;
 }
 
@@ -30,6 +31,7 @@ export function DraggableItem({
   revealedTextColor,
   score,
   maxScore,
+  timeDisplay,
   onDoubleClick,
 }: DraggableItemProps) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
@@ -70,6 +72,11 @@ export function DraggableItem({
       {score !== undefined && maxScore !== undefined && (
         <div className="text-xs mt-1 opacity-80 font-normal">
           {score}/{maxScore}
+        </div>
+      )}
+      {timeDisplay && timeDisplay !== "00:00" && (
+        <div className="text-xs mt-0.5 opacity-70 font-mono">
+          ⏱️ {timeDisplay}
         </div>
       )}
     </div>

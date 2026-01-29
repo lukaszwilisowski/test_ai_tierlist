@@ -1,10 +1,5 @@
 [
   {
-    "name": "Cursor",
-    "color": "#000000",
-    "textColor": "#FFFFFF"
-  },
-  {
     "name": "GitHub Copilot",
     "color": "#24292e",
     "textColor": "#FFFFFF"

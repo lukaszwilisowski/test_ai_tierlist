@@ -1,39 +1,52 @@
 {
   "agents": [
     {
-      "agent": "Cursor",
-      "durationMinutes": 0,
-      "durationSeconds": 0
-    },
-    {
       "agent": "GitHub Copilot",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": true,
+      "note": "Via copilot CLI"
     },
     {
       "agent": "Claude Code",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": true,
+      "note": "Via claude CLI"
     },
     {
       "agent": "Roo Code",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": false,
+      "note": "Manual testing only"
     },
     {
       "agent": "Cline",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": false,
+      "note": "Manual testing only"
     },
     {
       "agent": "Antigravity",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": false,
+      "note": "CLI doesn't work, manual testing only"
     },
     {
       "agent": "Codex CLI",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 0,
+      "timeDisplay": "00:00",
+      "canRunCLI": true,
+      "note": "Via codex CLI"
     }
   ],
   "models": [
@@ -41,47 +54,58 @@
       "model": "Sonnet 4.5",
       "agent": "Claude Code",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 14,
+      "timeDisplay": "00:14",
+      "canRunCLI": true,
+      "note": "Via copilot CLI with claude-sonnet-4.5"
     },
     {
       "model": "Opus 4.5",
       "agent": "Claude Code",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 16,
+      "timeDisplay": "00:16",
+      "canRunCLI": true,
+      "note": "Via copilot CLI with claude-opus-4.5"
     },
     {
       "model": "Codex 5.2",
       "agent": "GitHub Copilot",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 12,
+      "timeDisplay": "00:12",
+      "canRunCLI": true,
+      "note": "Via copilot CLI with gpt-5.2-codex"
     },
     {
       "model": "Codex 5.1 Max",
       "agent": "GitHub Copilot",
       "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 21,
+      "timeDisplay": "00:21",
+      "canRunCLI": true,
+      "note": "Via copilot CLI with gpt-5.1-codex-max"
     },
     {
       "model": "Gemini 3 Pro",
-      "agent": "Cursor",
+      "agent": "GitHub Copilot",
       "durationMinutes": 0,
-      "durationSeconds": 0
-    },
-    {
-      "model": "Gemini 3 Flash",
-      "agent": "Cursor",
-      "durationMinutes": 0,
-      "durationSeconds": 0
-    },
-    {
-      "model": "DeepSeek",
-      "agent": "Any",
-      "durationMinutes": 0,
-      "durationSeconds": 0
+      "durationSeconds": 19,
+      "timeDisplay": "00:19",
+      "canRunCLI": true,
+      "note": "Via copilot CLI with gemini-3-pro-preview"
     }
   ],
   "instructions": {
     "howToUse": "Record duration in minutes and seconds for each agent/model test",
-    "format": "Duration in whole minutes and seconds"
+    "format": "Duration in whole minutes and seconds",
+    "fields": {
+      "durationMinutes": "Total minutes (integer)",
+      "durationSeconds": "Remaining seconds after minutes (0-59)",
+      "timeDisplay": "Formatted as MM:SS for display in tierlist",
+      "canRunCLI": "Whether this can be automated via CLI",
+      "note": "Implementation notes"
+    },
+    "example": "For 3 minutes 24 seconds: durationMinutes=3, durationSeconds=24, timeDisplay='03:24'"
   }
 }

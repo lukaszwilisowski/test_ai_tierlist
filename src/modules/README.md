@@ -18,6 +18,7 @@ When adding new modules:
 ## Structure
 
 Each module should contain:
+
 - `config.ts` - Module configuration
 - `components.tsx` - React components
 - `hooks.ts` - Custom React hooks

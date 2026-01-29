@@ -19,13 +19,25 @@ codex --dangerously-bypass-approvals-and-sandbox "create test file test.js with 
 3. Copilot
 
 ```
-copilot -p "create example test.js file with few lines of code, do not ask any questions" --allow-all-tools
+copilot -p "create example test.js file with few lines of code, do not ask any questions" --allow-all-tools --allow-all-paths --model gpt-5.2-codex
 ```
 
-4. Cursor
+or models:
+gpt-5.1-codex-max
+claude-sonnet-4.5
+claude-opus-4.5
+gemini-3-flash
+gemini-3-pro
 
-5. Antigravity
+4. Antigravity
 
-6. Roo Code CLI
+agy chat "do sth" does not work
+Fallback to manual only
 
-7. Cline CLI
+5. Roo Code
+
+Manual only
+
+6. Cline CLI
+
+Manual only

@@ -26,6 +26,7 @@ interface TierItem {
   moduleName?: string;
   score?: number;
   maxScore?: number;
+  timeDisplay?: string;
 }
 
 interface AgentData {
@@ -46,6 +47,7 @@ interface ModuleData {
   emoji: string;
   score?: number;
   maxScore?: number;
+  timeDisplay?: string;
 }
 
 const TIERS: TierId[] = ['s', 'a', 'b', 'c', 'd', 'f'];
@@ -55,6 +57,7 @@ export default function TierlistPage() {
   const [agents, setAgents] = useState<AgentData[]>([]);
   const [models, setModels] = useState<ModelData[]>([]);
   const [modules, setModules] = useState<ModuleData[]>([]);
+  const [timingData, setTimingData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   // Separate state for each side
@@ -69,19 +72,22 @@ export default function TierlistPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [agentsRes, modelsRes, modulesRes] = await Promise.all([
+        const [agentsRes, modelsRes, modulesRes, timingRes] = await Promise.all([
           fetch('/api/data/agents'),
           fetch('/api/data/models'),
           fetch('/api/modules'),
+          fetch('/api/data/timing'),
         ]);
 
         const agentsData = await agentsRes.json();
         const modelsData = await modelsRes.json();
         const modulesData = await modulesRes.json();
+        const timingDataRes = await timingRes.json();
 
         setAgents(agentsData);
         setModels(modelsData);
         setModules(modulesData.data || []);
+        setTimingData(timingDataRes);
 
         // Initialize expectations pool
         const expectationsItems: TierItem[] = agentsData.map((agent: AgentData) => ({
@@ -124,6 +130,7 @@ export default function TierlistPage() {
       moduleName: module.name,
       score: module.score,
       maxScore: module.maxScore,
+      timeDisplay: module.timeDisplay,
     }));
 
     setRealityTiers({
@@ -338,6 +345,7 @@ export default function TierlistPage() {
                         revealedTextColor={item.revealedTextColor}
                         score={item.score}
                         maxScore={item.maxScore}
+                        timeDisplay={item.timeDisplay}
                         onDoubleClick={() => handleReveal(item)}
                       />
                     ))}
@@ -358,6 +366,7 @@ export default function TierlistPage() {
                       revealedTextColor={item.revealedTextColor}
                       score={item.score}
                       maxScore={item.maxScore}
+                      timeDisplay={item.timeDisplay}
                       onDoubleClick={() => handleReveal(item)}
                     />
                   ))}
