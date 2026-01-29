@@ -1,1 +1,1 @@
-./scripts/test-fruits.sh: line 153: timeout: command not found
+Error: stdin is not a terminal

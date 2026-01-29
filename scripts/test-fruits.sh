@@ -47,7 +47,8 @@ echo -e "${BLUE}📍 Starting from branch: $ORIGINAL_BRANCH${NC}"
 SPEC_CONTENT=$(cat "$SPEC_FILE")
 
 # CLI-capable agents only
-CLI_AGENTS=("Claude Code" "GitHub Copilot" "Codex CLI")
+# CLI_AGENTS=("Claude Code" "GitHub Copilot" "Codex CLI")
+CLI_AGENTS=("GitHub Copilot" "Codex CLI")  # Claude Code already completed
 
 echo -e "\n${BLUE}🚀 Starting automated agent implementations...${NC}"
 echo -e "${YELLOW}⚠️  Manual agents (Roo Code, Cline, Antigravity) must be tested separately${NC}\n"
@@ -140,7 +141,7 @@ CRITICAL REQUIREMENTS:
   # Run with timeout of 20 minutes, handle different CLI formats
   if [ "$AGENT_NAME" == "GitHub Copilot" ]; then
     # Copilot uses -p flag with quoted prompt
-    timeout 1200 $CLI_CMD "$PROMPT" --allow-all-tools --allow-all-paths --model gpt-5.2-codex 2>&1 | tee "$OUTPUT_FILE" || {
+    gtimeout 1200 $CLI_CMD "$PROMPT" --allow-all-tools --allow-all-paths --model gpt-5.2-codex 2>&1 | tee "$OUTPUT_FILE" || {
       EXIT_CODE=$?
       if [ $EXIT_CODE -eq 124 ]; then
         echo -e "${RED}❌ Timed out after 20 minutes!${NC}"
@@ -150,7 +151,7 @@ CRITICAL REQUIREMENTS:
     }
   else
     # Claude and Codex use direct prompt after command
-    timeout 1200 $CLI_CMD "$PROMPT" 2>&1 | tee "$OUTPUT_FILE" || {
+    gtimeout 1200 $CLI_CMD "$PROMPT" 2>&1 | tee "$OUTPUT_FILE" || {
       EXIT_CODE=$?
       if [ $EXIT_CODE -eq 124 ]; then
         echo -e "${RED}❌ Timed out after 20 minutes!${NC}"
@@ -202,7 +203,7 @@ CRITICAL REQUIREMENTS:
 
     # Add and commit
     git add "$MODULE_PATH/"
-    git add "$SECRET_PATH"
+    git add -f "$SECRET_PATH" 2>/dev/null || true  # Force add even if in .gitignore
     git add "$OUTPUT_FILE"
     git commit -m "Implement $FRUIT module (Agent: $AGENT_NAME)
 

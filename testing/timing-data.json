@@ -2,9 +2,9 @@
   "agents": [
     {
       "agent": "GitHub Copilot",
-      "durationMinutes": 0,
-      "durationSeconds": 0,
-      "timeDisplay": "00:00",
+      "durationMinutes": 3,
+      "durationSeconds": 49,
+      "timeDisplay": "03:49",
       "canRunCLI": true,
       "note": "Via copilot CLI"
     },
