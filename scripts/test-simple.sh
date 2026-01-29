@@ -6,9 +6,10 @@
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ASSIGNMENT_FILE="$SCRIPT_DIR/vegetable-assignment.json"
-TIMING_FILE="$SCRIPT_DIR/timing-data.json"
-TEST_DIR="$SCRIPT_DIR/phase1-results"
+PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
+ASSIGNMENT_FILE="$PROJECT_ROOT/testing/vegetable-assignment.json"
+TIMING_FILE="$PROJECT_ROOT/testing/timing-data.json"
+TEST_DIR="$PROJECT_ROOT/testing/phase1-results"
 
 # Colors for output
 GREEN='\033[0;32m'
@@ -24,7 +25,7 @@ echo -e "${BLUE}========================================${NC}"
 # Check if assignment file exists
 if [ ! -f "$ASSIGNMENT_FILE" ]; then
   echo -e "${RED}❌ No vegetable assignment file found!${NC}"
-  echo -e "${YELLOW}Run: node testing/assign-vegetables.js${NC}"
+  echo -e "${YELLOW}Run: node scripts/assign-vegetables.js${NC}"
   exit 1
 fi
 
@@ -87,7 +88,7 @@ while IFS= read -r MODEL_NAME; do
   echo -e "${BLUE}🤖 Model ID: $MODEL_ID${NC}"
 
   # Create prompt
-  PROMPT="create file testing/phase1-results/test-${VEGETABLE}.js with a simple function that calculates factorial of a number, add JSDoc comments, do not ask any questions"
+  PROMPT="create file $TEST_DIR/test-${VEGETABLE}.js with a simple function that calculates factorial of a number, add JSDoc comments, do not ask any questions"
 
   # Run copilot CLI and capture output
   echo -e "${YELLOW}⏳ Running Copilot CLI...${NC}"

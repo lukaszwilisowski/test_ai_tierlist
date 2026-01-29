@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const VEGETABLES_PATH = path.join(__dirname, '../data/vegetables.json');
-const MODELS_CONFIG_PATH = path.join(__dirname, 'timing-data.json');
+const MODELS_CONFIG_PATH = path.join(__dirname, '../testing/timing-data.json');
 const OUTPUT_PATH = path.join(__dirname, 'vegetable-assignment.json');
 
 function shuffleArray(array) {

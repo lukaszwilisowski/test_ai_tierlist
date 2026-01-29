@@ -53,9 +53,9 @@
     {
       "model": "Sonnet 4.5",
       "agent": "Claude Code",
-      "durationMinutes": 0,
-      "durationSeconds": 14,
-      "timeDisplay": "00:14",
+      "durationMinutes": 2,
+      "durationSeconds": 36,
+      "timeDisplay": "02:36",
       "canRunCLI": true,
       "note": "Via copilot CLI with claude-sonnet-4.5"
     },

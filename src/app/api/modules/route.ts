@@ -35,9 +35,11 @@ export async function GET() {
 
       for (const line of lines) {
         if (!line.trim()) continue;
-        const [module, , , , , , , , , , totalScore] = line.split(',');
+        const parts = line.split(',');
+        const module = parts[0];
+        const totalScore = parts[14]; // totalScore is at index 14
         if (module && totalScore) {
-          scoresMap.set(module, { score: parseInt(totalScore, 10), maxScore: 55 });
+          scoresMap.set(module, { score: parseInt(totalScore, 10), maxScore: 100 });
         }
       }
     } catch (err) {

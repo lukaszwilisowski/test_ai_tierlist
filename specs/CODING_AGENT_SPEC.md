@@ -54,7 +54,11 @@ Create these files in `src/modules/fruits/{your-fruit}/`:
 4. **api.ts** - API route handlers
 5. **components.tsx** - React UI components
 6. **hooks.ts** - TanStack Query hooks
-7. **secret.txt** - Agent name (exactly one of: `Cursor`, `GitHub Copilot`, `Claude Code`, `Roo Code`, `Cline`, `Antigravity`, `Codex CLI`)
+7. **secret.txt** - Contains ONLY the agent name (for reveal functionality)
+
+**Note**: In addition to the files above, you must also create `.secrets/fruits/{your-fruit}.json` with content: `{ "agent": "Agent Name" }`. This tracks which agent created the module and is used for timing data.
+
+The agent name must be exactly one of: `Cursor`, `GitHub Copilot`, `Claude Code`, `Roo Code`, `Cline`, `Antigravity`, `Codex CLI`
 
 ---
 

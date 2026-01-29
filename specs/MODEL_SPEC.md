@@ -8,18 +8,15 @@ This test evaluates **LLM code generation quality** (correctness, completeness, 
 
 ---
 
-## Step 1: Pick Your Module Name
+## Your Assigned Module
 
-1. Read `data/vegetables.json` - contains array of vegetables with names and emojis
-2. Check `src/modules/vegetables/` for existing folders
-3. Pick an UNUSED vegetable name from the JSON
-4. Use this name for your module (lowercase)
+You will be assigned a specific vegetable name and emoji. Use exactly that name (lowercase) for your module.
 
-**IMPORTANT**: Do NOT reveal which vegetable name you selected in any output messages during execution. This is a blind evaluation.
+**IMPORTANT**: The vegetable assignment and emoji will be provided to you. Do not change or modify them.
 
 ---
 
-## Step 2: Implement Your Module
+## Implementation Task
 
 Create these files in `src/modules/vegetables/{your-vegetable}/`:
 
@@ -31,7 +28,9 @@ Create these files in `src/modules/vegetables/{your-vegetable}/`:
 4. **api.ts** - API route handlers
 5. **components.tsx** - React UI components
 6. **hooks.ts** - TanStack Query hooks
-7. **secret.txt** - Model name (exactly one of: `Sonnet 4.5`, `Opus 4.5`, `Codex 5.2`, `Codex 5.1 Max`, `Gemini 3 Pro`, `Gemini 3 Flash`, `DeepSeek`)
+7. **secret.txt** - Contains ONLY the model name (for reveal functionality)
+
+**Note**: In addition to the files above, you must also create `.secrets/vegetables/{your-vegetable}.json` with content: `{ "model": "Model Name" }`. This tracks which model created the module and is used for timing data.
 
 ---
 
@@ -43,7 +42,7 @@ Create these files in `src/modules/vegetables/{your-vegetable}/`:
 const config = {
   displayName: "{YourVegetable} Shop",
   description: "Fresh {vegetable} products",
-  icon: "🥕", // Use appropriate emoji from data/vegetables.json
+  icon: "🥕", // Use the emoji provided to you
 };
 export default config;
 ```
@@ -428,7 +427,7 @@ export function useDeleteItem() {
 
 Before completion:
 
-- [ ] All 7 files exist (6 module files + secret.txt)
+- [ ] All 6 module files exist in src/modules/vegetables/{vegetable}/
 - [ ] `npm run build` passes without errors
 - [ ] POST with valid data returns 201
 - [ ] POST with empty name returns 400
